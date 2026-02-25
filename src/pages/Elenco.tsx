@@ -47,8 +47,17 @@ export default function Elenco() {
   return (
     <PaginaComVoltar
       titulo="Cadastro do Elenco"
+      subtitulo="Cadastre os bailarinos que poderão ser vinculados às coreografias da inscrição."
       aoVoltar={() => navegar(-1)}
       classeContainer="max-w-6xl"
+      etapas={[
+        { id: "tipo", titulo: "Tipo" },
+        { id: "dados", titulo: "Dados" },
+        { id: "elenco", titulo: "Elenco" },
+        { id: "coreografias", titulo: "Coreografias" },
+        { id: "resumo", titulo: "Resumo" },
+      ]}
+      etapaAtualId="elenco"
     >
       {mensagemAviso && <ToastAviso mensagem={mensagemAviso} />}
 
@@ -61,13 +70,19 @@ export default function Elenco() {
           }
         />
 
-        <div>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-4 md:p-5">
+          <div className="mb-3">
+            <h2 className="font-secondary font-semibold text-white">Visão do elenco</h2>
+            <p className="text-sm text-gray-400">
+              Revise os bailarinos cadastrados antes de avançar.
+            </p>
+          </div>
           <ListaBailarinos bailarinos={bailarinos} carregando={carregandoLista} />
 
           <button
             onClick={avancarParaCoreografias}
             disabled={avancando}
-            className="mt-8 px-6 py-3 w-full bg-orange-500 text-black font-medium hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="mt-8 px-6 py-3 w-full rounded-xl bg-orange-500 text-black font-medium hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {avancando ? "Avançando..." : "Avançar para Coreografias"}
           </button>

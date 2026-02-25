@@ -34,8 +34,17 @@ export default function Resumo() {
   return (
     <PaginaComVoltar
       titulo="Resumo da Inscrição"
+      subtitulo="Revise valores e coreografias antes de confirmar sua inscrição."
       aoVoltar={() => navegar(-1)}
       classeContainer="max-w-6xl"
+      etapas={[
+        { id: "tipo", titulo: "Tipo" },
+        { id: "dados", titulo: "Dados" },
+        { id: "elenco", titulo: "Elenco" },
+        { id: "coreografias", titulo: "Coreografias" },
+        { id: "resumo", titulo: "Resumo" },
+      ]}
+      etapaAtualId="resumo"
     >
       <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-8">
         <section>

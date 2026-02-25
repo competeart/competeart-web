@@ -17,9 +17,17 @@
    Base styles
 ========================= */
 @layer base {
+  :root {
+    --cor-fundo: #060606;
+    --cor-superficie: #101010;
+    --cor-borda: #252525;
+    --cor-destaque: #f97316;
+    --cor-info: #22d3ee;
+  }
+
   body {
     margin: 0;
-    background-color: #000000;
+    background-color: var(--cor-fundo);
     color: #ffffff;
     font-family: "Poppins", system-ui, sans-serif;
   }
@@ -36,4 +44,81 @@
 
 .animate-slideUp {
   animation: slideUp 0.3s ease-out;
+}
+
+@keyframes brilhoLento {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate3d(0, -8px, 0) scale(1.04);
+  }
+}
+
+@keyframes pulseTexto {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translateY(4px);
+  }
+  15%,
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes linhaDeslizante {
+  from {
+    transform: translateX(-30%);
+  }
+  to {
+    transform: translateX(30%);
+  }
+}
+
+@keyframes varreduraLuz {
+  0% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.12;
+  }
+  45% {
+    opacity: 0.35;
+  }
+  75% {
+    opacity: 0.12;
+  }
+  100% {
+    transform: translateX(160%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.bg-grade-sutil {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.brilho-lento {
+  animation: brilhoLento 8s ease-in-out infinite;
+}
+
+.texto-pulsante {
+  animation: pulseTexto 1.8s ease-in-out;
+}
+
+.linha-deslizante {
+  animation: linhaDeslizante 8s linear infinite alternate;
+}
+
+.varredura-luz {
+  animation: varreduraLuz 3.6s ease-in-out infinite;
 }

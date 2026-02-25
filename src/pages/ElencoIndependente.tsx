@@ -48,8 +48,17 @@ export default function ElencoIndependente() {
   return (
     <PaginaComVoltar
       titulo="Cadastro do Elenco"
+      subtitulo="Cadastre você e os demais participantes que poderão entrar nas coreografias."
       aoVoltar={() => navegar(-1)}
       classeContainer="max-w-6xl"
+      etapas={[
+        { id: "tipo", titulo: "Tipo" },
+        { id: "dados", titulo: "Dados" },
+        { id: "elenco", titulo: "Elenco" },
+        { id: "coreografias", titulo: "Coreografias" },
+        { id: "resumo", titulo: "Resumo" },
+      ]}
+      etapaAtualId="elenco"
     >
       {mostrarModalInfo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
@@ -89,13 +98,19 @@ export default function ElencoIndependente() {
           }
         />
 
-        <div>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-4 md:p-5">
+          <div className="mb-3">
+            <h2 className="font-secondary font-semibold text-white">Visão do elenco</h2>
+            <p className="text-sm text-gray-400">
+              Revise os participantes cadastrados antes de seguir.
+            </p>
+          </div>
           <ListaBailarinos bailarinos={bailarinos} carregando={carregandoLista} />
 
           <button
             onClick={avancarParaCoreografias}
             disabled={avancando}
-            className="mt-8 px-6 py-3 w-full bg-orange-500 text-black font-medium hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="mt-8 px-6 py-3 w-full rounded-xl bg-orange-500 text-black font-medium hover:bg-orange-600 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {avancando ? "Avançando..." : "Avançar para Coreografias"}
           </button>
