@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 import { buscarEscolaAdmin, listarEscolasAdmin } from "../lib/api";
 import HeaderSite from "../components/layout/HeaderSite";
 import FundoFestival from "../components/layout/FundoFestival";
@@ -51,6 +52,11 @@ export default function Admin() {
   const tituloDetalhes =
     detalheInscricao?.escola?.nome || detalheInscricao?.independente?.nomeResponsavel;
 
+  function sairDoAdmin() {
+    localStorage.removeItem("admin-token");
+    navegar("/admin/login");
+  }
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white px-6 py-8 md:py-10">
       <FundoFestival variante="admin" />
@@ -60,7 +66,22 @@ export default function Admin() {
           <HeaderSite />
         </div>
 
-        <h1 className="text-3xl font-primary text-orange-500 mb-8">Inscrições</h1>
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h1 className="text-3xl font-primary text-orange-500">Inscrições</h1>
+            <p className="mt-2 text-sm text-gray-400">
+              Acompanhe status, valores e detalhes de cada inscrição.
+            </p>
+          </div>
+
+          <button
+            onClick={sairDoAdmin}
+            className="inline-flex items-center gap-2 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-2.5 text-sm font-medium text-red-100 hover:bg-red-500/20 transition"
+          >
+            <LogOut size={15} />
+            Logout
+          </button>
+        </div>
 
         {carregandoLista ? (
           <p className="text-gray-400">Carregando...</p>

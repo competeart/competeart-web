@@ -4,6 +4,7 @@ import {
   FileText,
   Gavel,
   Lock,
+  LogOut,
   MapPin,
   Menu,
   Shield,
@@ -58,6 +59,13 @@ function ItemMenuAtivo({
 export default function HeaderSite({ className = "", sobreFundo = false }: HeaderSiteProps) {
   const navegar = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
+  const adminLogado = Boolean(localStorage.getItem("admin-token"));
+
+  function sairAdmin() {
+    localStorage.removeItem("admin-token");
+    setMenuAberto(false);
+    navegar("/admin/login");
+  }
 
   return (
     <div className={`relative z-40 ${className}`}>
@@ -137,13 +145,30 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
             />
             <ItemMenuAtivo
               icone={Shield}
-              titulo="Acesso administrativo"
-              subtitulo="Painel de inscrições"
+              titulo={adminLogado ? "Painel administrativo" : "Acesso administrativo"}
+              subtitulo={
+                adminLogado ? "Abrir dashboard de inscrições" : "Entrar com chave de acesso"
+              }
               onClick={() => {
                 setMenuAberto(false);
-                navegar("/admin/login");
+                navegar(adminLogado ? "/admin" : "/admin/login");
               }}
             />
+
+            {adminLogado && (
+              <button
+                onClick={sairAdmin}
+                className="w-full text-left rounded-xl border border-red-400/25 bg-red-500/10 hover:bg-red-500/20 transition px-4 py-3 flex items-center gap-3"
+              >
+                <span className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-400/30 flex items-center justify-center text-red-200">
+                  <LogOut size={16} />
+                </span>
+                <span>
+                  <span className="block text-sm font-medium text-red-100">Sair do admin</span>
+                  <span className="block text-xs text-red-200/70">Encerrar sessão atual</span>
+                </span>
+              </button>
+            )}
           </div>
 
           <div className="my-3 h-px bg-zinc-800" />
