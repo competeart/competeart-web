@@ -91,8 +91,8 @@ export default function Resumo() {
             <span>R$ {resumo.valores.coreografias}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>Assistentes extras</span>
-            <span>R$ {resumo.valores.assistentesExtras}</span>
+            <span>Profissionais extras</span>
+            <span>R$ {resumo.valores.profissionaisExtras ?? resumo.valores.assistentesExtras}</span>
           </div>
 
           <div className="flex justify-between text-lg font-bold mt-4 pt-4 border-t border-zinc-700">

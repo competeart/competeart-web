@@ -52,25 +52,31 @@ export default function EscolaForm() {
     }));
   }
 
+  function recalcularProfissionaisExtras(profissionais: Profissional[]) {
+    return profissionais.map((profissional, indice) => ({
+      ...profissional,
+      ehExtra: indice >= 2,
+    }));
+  }
+
   function adicionarProfissional() {
     setErrosCampo((errosAtuais) => {
       const { profissionais, ...restante } = errosAtuais;
       return restante;
     });
 
-    const assistentes = dadosFormulario.profissionais.filter(
-      (p) => p.funcao === "ASSISTENTE",
-    );
-
     const novoProfissional: Profissional = {
       nome: "",
       funcao: "ASSISTENTE",
-      ehExtra: assistentes.length >= 2,
+      ehExtra: false,
     };
 
     setDadosFormulario((dadosAtuais) => ({
       ...dadosAtuais,
-      profissionais: [...dadosAtuais.profissionais, novoProfissional],
+      profissionais: recalcularProfissionaisExtras([
+        ...dadosAtuais.profissionais,
+        novoProfissional,
+      ]),
     }));
   }
 
@@ -83,7 +89,10 @@ export default function EscolaForm() {
       const profissionais = [...dadosAtuais.profissionais];
       profissionais[indice] = { ...profissionais[indice], [campo]: valor };
 
-      return { ...dadosAtuais, profissionais };
+      return {
+        ...dadosAtuais,
+        profissionais: recalcularProfissionaisExtras(profissionais),
+      };
     });
   }
 
@@ -265,8 +274,8 @@ export default function EscolaForm() {
                 <option value="ASSISTENTE">Assistente</option>
               </select>
 
-              {profissional.funcao === "ASSISTENTE" && profissional.ehExtra && (
-                <p className="text-sm text-orange-400">Assistente extra (R$ 70)</p>
+              {profissional.ehExtra && (
+                <p className="text-sm text-orange-400">Profissional extra (R$ 70)</p>
               )}
             </div>
           ))}
