@@ -3,7 +3,27 @@ import { useNavigate } from "react-router-dom";
 import PaginaComVoltar from "../components/layout/PaginaComVoltar";
 import { REGULAMENTO_COMPETE_ART } from "../data/regulamentoCompeteArt";
 
-type ValorRegulamento = string | number | boolean | null | ValorRegulamento[] | { [key: string]: ValorRegulamento };
+type ValorRegulamento =
+  | string
+  | number
+  | boolean
+  | null
+  | readonly ValorRegulamento[]
+  | { readonly [key: string]: ValorRegulamento };
+type ObjetoRegulamento = { [key: string]: ValorRegulamento };
+
+const TERMOS_DATA_LOCAL = [
+  "data",
+  "local",
+  "endereco",
+  "teatro",
+  "campinas",
+  "vila industrial",
+  "rua conselheiro",
+];
+
+const PADRAO_DATA_POR_EXTENSO =
+  /\b\d{1,2}\s+de\s+(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\b/i;
 
 const MAPA_ROTULOS_COMPLETOS: Record<string, string> = {
   CATEGORIAS_ETARIAS: "Categorias Etárias",
@@ -12,11 +32,9 @@ const MAPA_ROTULOS_COMPLETOS: Record<string, string> = {
   VALORES_E_PRAZOS: "Valores e Prazos",
   CRONOGRAMA_E_HORARIOS: "Cronograma e Horários",
   EQUIPE_TECNICA: "Equipe Técnica",
-  ACESSO_AO_TEATRO: "Acesso ao Teatro",
   CAMARINS_E_COXIAS: "Camarins e Coxias",
   INFORMACOES_GERAIS: "Informações Gerais",
   RESPONSABILIDADE_MEDICA: "Responsabilidade Médica",
-  DATA_E_HORA: "Data e Hora",
   O_QUE_E: "O que é",
   MEDIDAS_DO_PALCO: "Medidas do Palco",
   ACESSO_INGRESSO_ANTECIPADO: "Acesso com Ingresso Antecipado",
@@ -67,6 +85,57 @@ function slugify(texto: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
+}
+
+function normalizarTexto(texto: string) {
+  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function contemReferenciaDataOuLocal(texto: string) {
+  const textoNormalizado = normalizarTexto(texto);
+  if (PADRAO_DATA_POR_EXTENSO.test(textoNormalizado)) {
+    return true;
+  }
+
+  return TERMOS_DATA_LOCAL.some((termo) => textoNormalizado.includes(termo));
+}
+
+function chaveEhDataOuLocal(chave: string) {
+  const chaveNormalizada = normalizarTexto(chave.replace(/_/g, " "));
+  return ["data", "local", "endereco", "teatro"].some((termo) => chaveNormalizada.includes(termo));
+}
+
+function sanitizarValorRegulamento(valor: ValorRegulamento): ValorRegulamento | null {
+  if (valor == null) return null;
+
+  if (typeof valor === "string") {
+    return contemReferenciaDataOuLocal(valor) ? null : valor;
+  }
+
+  if (typeof valor === "number" || typeof valor === "boolean") {
+    return valor;
+  }
+
+  if (Array.isArray(valor)) {
+    const itensLimpos = valor
+      .map((item) => sanitizarValorRegulamento(item))
+      .filter((item): item is Exclude<ValorRegulamento, null> => item !== null);
+
+    return itensLimpos.length > 0 ? itensLimpos : null;
+  }
+
+  const objetoLimpo: ObjetoRegulamento = {};
+
+  Object.entries(valor).forEach(([chave, conteudo]) => {
+    if (chaveEhDataOuLocal(chave)) return;
+
+    const conteudoLimpo = sanitizarValorRegulamento(conteudo);
+    if (conteudoLimpo !== null) {
+      objetoLimpo[chave] = conteudoLimpo;
+    }
+  });
+
+  return Object.keys(objetoLimpo).length > 0 ? objetoLimpo : null;
 }
 
 function ListaStrings({ itens }: { itens: string[] }) {
@@ -125,13 +194,17 @@ export default function Regulamento() {
   const navegar = useNavigate();
 
   const secoes = useMemo(() => {
+    const regulamentoLimpo = sanitizarValorRegulamento(REGULAMENTO_COMPETE_ART);
+
+    if (!regulamentoLimpo || Array.isArray(regulamentoLimpo) || typeof regulamentoLimpo !== "object") {
+      return [];
+    }
+
     const {
       TITULO: _titulo,
       SUBTITULO: _subtitulo,
-      DATA_E_HORA: _data,
-      LOCAL: _local,
       ...restante
-    } = REGULAMENTO_COMPETE_ART;
+    } = regulamentoLimpo as ObjetoRegulamento;
 
     return Object.entries(restante).map(([chave, valor]) => ({
       chave,
@@ -151,23 +224,13 @@ export default function Regulamento() {
       <div className="grid xl:grid-cols-[320px_minmax(0,1fr)] gap-6 items-start">
         <aside className="xl:sticky xl:top-6 space-y-4">
           <div className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5">
-            <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Evento</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Regulamento</p>
             <h2 className="mt-2 text-xl text-orange-400 font-primary leading-tight">
               {REGULAMENTO_COMPETE_ART.TITULO}
             </h2>
-            <div className="mt-4 space-y-3 text-sm">
-              <div className="rounded-xl border border-zinc-800 bg-black/30 p-3">
-                <p className="text-gray-400 uppercase tracking-wide text-xs">Data e horário</p>
-                <p className="text-white mt-1">{REGULAMENTO_COMPETE_ART.DATA_E_HORA}</p>
-              </div>
-              <div className="rounded-xl border border-zinc-800 bg-black/30 p-3">
-                <p className="text-gray-400 uppercase tracking-wide text-xs">Local</p>
-                <p className="text-white mt-1">{REGULAMENTO_COMPETE_ART.LOCAL.NOME}</p>
-                <p className="text-gray-300 mt-1 text-xs leading-relaxed">
-                  {REGULAMENTO_COMPETE_ART.LOCAL.ENDERECO}
-                </p>
-              </div>
-            </div>
+            <p className="mt-3 text-sm text-gray-300 leading-relaxed">
+              Consulte abaixo as regras oficiais para inscrição e participação no festival.
+            </p>
           </div>
 
           <nav className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4">

@@ -5,7 +5,6 @@ import {
   Gavel,
   Lock,
   LogOut,
-  MapPin,
   Menu,
   Shield,
   Users,
@@ -123,15 +122,6 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
               onClick={() => {
                 setMenuAberto(false);
                 navegar("/jurados");
-              }}
-            />
-            <ItemMenuAtivo
-              icone={MapPin}
-              titulo="Localização"
-              subtitulo="Como chegar ao teatro"
-              onClick={() => {
-                setMenuAberto(false);
-                navegar("/localizacao");
               }}
             />
             <ItemMenuAtivo

@@ -120,17 +120,6 @@ export default function Home() {
           <div className="relative">
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-500/10 via-transparent to-pink-500/10 blur-2xl" />
             <div className="relative rounded-3xl border border-zinc-700 bg-zinc-950/70 backdrop-blur-md p-5 md:p-6 shadow-2xl">
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="rounded-xl border border-zinc-800 bg-black/40 p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-gray-400">Data</p>
-                  <p className="mt-2 text-sm text-white">9 de maio de 2026</p>
-                </div>
-                <div className="rounded-xl border border-zinc-800 bg-black/40 p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-gray-400">Local</p>
-                  <p className="mt-2 text-sm text-white">Teatro Castro Mendes em Campinas/SP</p>
-                </div>
-              </div>
-
               <div className="rounded-2xl border border-zinc-800 bg-black/50 p-4 md:p-5">
                 <p className="text-xs uppercase tracking-[0.2em] text-orange-300 mb-3">
                   Destaque Compete'Art
