@@ -12,7 +12,6 @@ import {
   Users,
   X,
   Home,
-  PenSquare,
 } from "lucide-react";
 import { abrirRegulamentoEmNovaAba } from "../../lib/regulamento";
 
@@ -119,15 +118,6 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
               onClick={() => {
                 setMenuAberto(false);
                 navegar("/");
-              }}
-            />
-            <ItemMenuAtivo
-              icone={PenSquare}
-              titulo="Inscrição"
-              subtitulo="Iniciar cadastro"
-              onClick={() => {
-                setMenuAberto(false);
-                navegar("/inscricao");
               }}
             />
             <ItemMenuAtivo

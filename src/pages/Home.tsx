@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, ChevronRight, ExternalLink, MapPin } from "lucide-react";
+import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
 import HeaderSite from "../components/layout/HeaderSite";
 import { abrirRegulamentoEmNovaAba } from "../lib/regulamento";
 
@@ -74,8 +74,8 @@ export default function Home() {
           <div className="text-center lg:text-left">
             <div className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 bg-zinc-950/80 px-4 py-2 text-xs tracking-[0.18em] uppercase text-gray-300">
               <span className="absolute inset-y-0 -left-10 w-16 bg-gradient-to-r from-transparent via-white/35 to-transparent varredura-luz" />
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-300" />
-              <span>Inscrições abertas</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+              <span>Inscrições encerradas</span>
             </div>
 
             <div className="mt-8 flex justify-center lg:justify-start">
@@ -97,18 +97,11 @@ export default function Home() {
             </h1>
 
             <p className="mt-5 text-base md:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Uma celebração de dança, performance e presença de palco. Cadastre sua escola
-              ou sua inscrição independente e leve sua coreografia para o Compete'Art.
+              Uma celebração de dança, performance e presença de palco. As inscrições para
+              esta edição foram encerradas.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-              <button
-                onClick={() => navegar("/inscricao")}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-orange-500 text-black font-semibold hover:bg-orange-600 transition shadow-[0_10px_30px_rgba(249,115,22,0.25)]"
-              >
-                Quero me inscrever
-                <ChevronRight size={18} />
-              </button>
               <button
                 onClick={abrirRegulamentoEmNovaAba}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-zinc-600 bg-zinc-950/50 text-gray-200 hover:border-orange-400/40 hover:text-white transition"
