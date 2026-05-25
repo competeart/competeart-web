@@ -7,6 +7,7 @@ import {
   Copy,
   Download,
   Trash2,
+  TicketCheck,
   X,
 } from "lucide-react";
 import {
@@ -409,13 +410,24 @@ export default function Admin() {
           <HeaderSite />
         </div>
 
-        <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl font-primary text-orange-400">
-            Painel de inscrições
-          </h1>
-          <p className="mt-2 text-sm text-zinc-300">
-            Visualização técnica do andamento dos cadastros.
-          </p>
+        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-primary text-orange-400">
+              Painel de inscrições
+            </h1>
+            <p className="mt-2 text-sm text-zinc-300">
+              Visualização técnica do andamento dos cadastros.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => navegar("/check-in")}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-200 transition hover:border-orange-300/45"
+          >
+            <TicketCheck size={15} />
+            Check-in
+          </button>
         </div>
 
         <div className="mb-4 grid gap-2 md:grid-cols-3">

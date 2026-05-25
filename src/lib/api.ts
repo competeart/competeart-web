@@ -202,6 +202,23 @@ export async function validarAdmin(token: string) {
   return response.ok;
 }
 
+export async function validarCheckIn(token: string) {
+  const params = new URLSearchParams({
+    nome: "aa",
+  });
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/check-in/participantes?${params.toString()}`,
+    {
+      headers: {
+        "x-checkin-key": token,
+      },
+    },
+  );
+
+  return response.ok;
+}
+
 export async function buscarEscolaAdmin(id: string) {
   const token = localStorage.getItem("admin-token");
 
@@ -237,4 +254,119 @@ export async function excluirInscricaoAdmin(id: string) {
   if (!response.ok) {
     throw new Error("Erro ao excluir inscrição");
   }
+}
+
+export async function listarEscolasCheckIn() {
+  const checkInToken = localStorage.getItem("checkin-token");
+  const adminToken = localStorage.getItem("admin-token");
+
+  if (!checkInToken && !adminToken) {
+    throw new Error("NAO_AUTENTICADO");
+  }
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/check-in/escolas`,
+    {
+      headers: {
+        ...(checkInToken
+          ? { "x-checkin-key": checkInToken }
+          : { "x-admin-key": adminToken || "" }),
+      },
+    },
+  );
+
+  if (response.status === 401) {
+    localStorage.removeItem("checkin-token");
+    window.location.href = "/check-in/login";
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erro ao carregar escolas");
+  }
+
+  return response.json();
+}
+
+export async function buscarParticipantesCheckIn(
+  nome: string,
+  filtros?: {
+    checkIn?: "TODOS" | "FEITO" | "PENDENTE";
+    escolaId?: string;
+  },
+) {
+  const checkInToken = localStorage.getItem("checkin-token");
+  const adminToken = localStorage.getItem("admin-token");
+
+  if (!checkInToken && !adminToken) {
+    throw new Error("NAO_AUTENTICADO");
+  }
+
+  const params = new URLSearchParams({
+    nome,
+  });
+
+  if (filtros?.checkIn && filtros.checkIn !== "TODOS") {
+    params.set("checkIn", filtros.checkIn);
+  }
+
+  if (filtros?.escolaId) {
+    params.set("escolaId", filtros.escolaId);
+  }
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/check-in/participantes?${params.toString()}`,
+    {
+      headers: {
+        ...(checkInToken
+          ? { "x-checkin-key": checkInToken }
+          : { "x-admin-key": adminToken || "" }),
+      },
+    },
+  );
+
+  if (response.status === 401) {
+    localStorage.removeItem("checkin-token");
+    window.location.href = "/check-in/login";
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erro ao buscar participantes");
+  }
+
+  return response.json();
+}
+
+export async function fazerCheckInParticipante(id: string) {
+  const checkInToken = localStorage.getItem("checkin-token");
+  const adminToken = localStorage.getItem("admin-token");
+
+  if (!checkInToken && !adminToken) {
+    throw new Error("NAO_AUTENTICADO");
+  }
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/check-in/participantes/${id}/check-in`,
+    {
+      method: "PATCH",
+      headers: {
+        ...(checkInToken
+          ? { "x-checkin-key": checkInToken }
+          : { "x-admin-key": adminToken || "" }),
+      },
+    },
+  );
+
+  if (response.status === 401) {
+    localStorage.removeItem("checkin-token");
+    window.location.href = "/check-in/login";
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erro ao fazer check-in");
+  }
+
+  return response.json();
 }

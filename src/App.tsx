@@ -8,7 +8,9 @@ import Elenco from "./pages/Elenco";
 import Coreografias from "./pages/Coreografias";
 import Resumo from "./pages/Resumo";
 import Admin from "./pages/Admin";
+import AdminCheckIn from "./pages/AdminCheckIn";
 import AdminLogin from "./pages/AdminLogin";
+import CheckInLogin from "./pages/CheckInLogin";
 import ElencoIndependente from "./pages/ElencoIndependente";
 import CoreografiasIndependente from "./pages/CoreografiasIndependente";
 import ResumoIndependente from "./pages/ResumoIndependente";
@@ -58,6 +60,9 @@ export default function App() {
         />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/check-in" element={<Navigate to="/check-in" replace />} />
+        <Route path="/check-in/login" element={<CheckInLogin />} />
+        <Route path="/check-in" element={<AdminCheckIn />} />
       </Routes>
     </BrowserRouter>
   );

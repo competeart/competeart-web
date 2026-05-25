@@ -9,6 +9,7 @@ import {
   MapPin,
   Menu,
   Shield,
+  TicketCheck,
   Users,
   X,
   Home,
@@ -68,9 +69,11 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
   const navegar = useNavigate();
   const [menuAberto, setMenuAberto] = useState(false);
   const adminLogado = Boolean(localStorage.getItem("admin-token"));
+  const moderadorLogado = Boolean(localStorage.getItem("checkin-token"));
 
   function sairAdmin() {
     localStorage.removeItem("admin-token");
+    localStorage.removeItem("checkin-token");
     setMenuAberto(false);
     navegar("/admin/login");
   }
@@ -156,8 +159,21 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
                 navegar(adminLogado ? "/admin" : "/admin/login");
               }}
             />
+            <ItemMenuAtivo
+              icone={TicketCheck}
+              titulo={adminLogado || moderadorLogado ? "Check-in" : "Acesso check-in"}
+              subtitulo={
+                adminLogado || moderadorLogado
+                  ? "Buscar participantes"
+                  : "Entrar como moderador"
+              }
+              onClick={() => {
+                setMenuAberto(false);
+                navegar(adminLogado || moderadorLogado ? "/check-in" : "/check-in/login");
+              }}
+            />
 
-            {adminLogado && (
+            {(adminLogado || moderadorLogado) && (
               <button
                 onClick={sairAdmin}
                 className="w-full text-left rounded-xl border border-red-400/25 bg-red-500/10 hover:bg-red-500/20 transition px-4 py-3 flex items-center gap-3"
@@ -166,7 +182,7 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
                   <LogOut size={16} />
                 </span>
                 <span>
-                  <span className="block text-sm font-medium text-red-100">Sair do admin</span>
+                  <span className="block text-sm font-medium text-red-100">Sair do acesso</span>
                   <span className="block text-xs text-red-200/70">Encerrar sessão atual</span>
                 </span>
               </button>
