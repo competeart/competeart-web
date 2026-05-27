@@ -370,3 +370,75 @@ export async function fazerCheckInParticipante(id: string) {
 
   return response.json();
 }
+
+function obterHeadersAdmin(): Record<string, string> {
+  const adminToken = localStorage.getItem("admin-token");
+
+  if (!adminToken) {
+    throw new Error("NAO_AUTENTICADO");
+  }
+
+  return { "x-admin-key": adminToken };
+}
+
+export async function listarCronograma() {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/cronograma`);
+
+  if (!response.ok) {
+    throw new Error("Erro ao carregar cronograma");
+  }
+
+  return response.json();
+}
+
+export async function reordenarCronograma(coreografiasIds: string[]) {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/cronograma/ordem`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...obterHeadersAdmin(),
+    },
+    body: JSON.stringify({ coreografiasIds }),
+  });
+
+  if (response.status === 401) {
+    localStorage.removeItem("admin-token");
+    window.location.href = "/admin/login";
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erro ao reordenar cronograma");
+  }
+
+  return response.json();
+}
+
+export async function marcarConclusaoCronograma(
+  coreografiaId: string,
+  concluida: boolean,
+) {
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL}/cronograma/${coreografiaId}/conclusao`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...obterHeadersAdmin(),
+      },
+      body: JSON.stringify({ concluida }),
+    },
+  );
+
+  if (response.status === 401) {
+    localStorage.removeItem("admin-token");
+    window.location.href = "/admin/login";
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erro ao atualizar cronograma");
+  }
+
+  return response.json();
+}

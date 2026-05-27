@@ -1,23 +1,44 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
+import { CalendarDays, Clock3, MapPin } from "lucide-react";
 import HeaderSite from "../components/layout/HeaderSite";
-import { abrirRegulamentoEmNovaAba } from "../lib/regulamento";
 
 const PALAVRAS_DINAMICAS = ["arte", "movimento", "palco", "competição"];
+const DATA_FESTIVAL = new Date(2026, 5, 5, 9, 0, 0);
+const UM_SEGUNDO = 1000;
+const UM_MINUTO = 1000 * 60;
+const UMA_HORA = UM_MINUTO * 60;
+const UM_DIA = UMA_HORA * 24;
+
+function formatarTempo(valor: number) {
+  return String(valor).padStart(2, "0");
+}
 
 export default function Home() {
   const navegar = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [indicePalavra, setIndicePalavra] = useState(0);
-  const [animarPalavra, setAnimarPalavra] = useState(false);
+  const [animarPalavra, setAnimarPalavra] = useState(true);
   const [videoFalhou, setVideoFalhou] = useState(false);
+  const [agora, setAgora] = useState(() => Date.now());
 
   const palavraAtual = useMemo(
     () => PALAVRAS_DINAMICAS[indicePalavra],
     [indicePalavra],
   );
+
+  const contagemFestival = useMemo(() => {
+    const restante = Math.max(0, DATA_FESTIVAL.getTime() - agora);
+
+    return {
+      dias: Math.floor(restante / UM_DIA),
+      horas: Math.floor((restante % UM_DIA) / UMA_HORA),
+      minutos: Math.floor((restante % UMA_HORA) / UM_MINUTO),
+      segundos: Math.floor((restante % UM_MINUTO) / UM_SEGUNDO),
+      encerrado: restante === 0,
+    };
+  }, [agora]);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -27,9 +48,12 @@ export default function Home() {
         setAnimarPalavra(true);
       }, 50);
     }, 1900);
-
-    setAnimarPalavra(true);
     return () => clearInterval(intervalo);
+  }, []);
+
+  useEffect(() => {
+    const intervalo = window.setInterval(() => setAgora(Date.now()), UM_SEGUNDO);
+    return () => window.clearInterval(intervalo);
   }, []);
 
   useEffect(() => {
@@ -63,8 +87,7 @@ export default function Home() {
       <div className="absolute inset-0 z-10 bg-black/70" />
       <div className="absolute inset-0 z-10 bg-grade-sutil opacity-30" />
       <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_20%_25%,rgba(249,115,22,0.18),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(244,114,182,0.14),transparent_40%),radial-gradient(circle_at_50%_90%,rgba(34,211,238,0.10),transparent_45%)]" />
-      <div className="pointer-events-none absolute top-24 left-1/2 z-20 h-px w-[88%] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-
+     
       <div className="relative z-30 min-h-screen px-6 py-6 md:px-10 md:py-8">
         <div className="max-w-6xl mx-auto">
           <HeaderSite sobreFundo />
@@ -72,13 +95,7 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto min-h-[calc(100vh-6.5rem)] grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
           <div className="text-center lg:text-left">
-            <div className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 bg-zinc-950/80 px-4 py-2 text-xs tracking-[0.18em] uppercase text-gray-300">
-              <span className="absolute inset-y-0 -left-10 w-16 bg-gradient-to-r from-transparent via-white/35 to-transparent varredura-luz" />
-              <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
-              <span>Inscrições encerradas</span>
-            </div>
-
-            <div className="mt-8 flex justify-center lg:justify-start">
+            <div className="flex justify-center lg:justify-start">
               <img
                 src="/assets/logo.png"
                 alt="Compete'Art"
@@ -102,13 +119,11 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-              <button
-                onClick={abrirRegulamentoEmNovaAba}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-zinc-600 bg-zinc-950/50 text-gray-200 hover:border-orange-400/40 hover:text-white transition"
-              >
-                Ver regulamento
-                <ExternalLink size={16} />
-              </button>
+              <div className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 bg-zinc-950/80 px-4 py-2 text-xs tracking-[0.18em] uppercase text-gray-300">
+                <span className="absolute inset-y-0 -left-10 w-16 bg-gradient-to-r from-transparent via-white/35 to-transparent varredura-luz" />
+                <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+                <span>Inscrições encerradas</span>
+              </div>
             </div>
           </div>
 
@@ -151,28 +166,55 @@ export default function Home() {
                     Ver mapa
                   </span>
                 </button>
-              </div>
 
-              <div className="rounded-2xl border border-zinc-800 bg-black/50 p-4 md:p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-orange-300 mb-3">
-                  Destaque Compete'Art
-                </p>
-                <p className="text-white text-base md:text-lg leading-relaxed">
-                  Um encontro de talento, presença de palco e emoção. O Compete'Art celebra
-                  coreografias que contam histórias, marcam o público e transformam performance
-                  em experiência.
-                </p>
-                <div className="mt-5 h-px bg-gradient-to-r from-transparent via-zinc-600 to-transparent" />
-                <div className="mt-4 grid sm:grid-cols-3 gap-2 text-sm">
-                  <div className="rounded-lg bg-zinc-900/80 border border-zinc-800 px-3 py-2 text-gray-300">
-                    Palco, luz e performance
+                <div className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-black/55 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.28)] md:p-5">
+                  <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
+                  <div className="mb-4">
+                    <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-orange-300">
+                      <Clock3 size={14} />
+                      Contagem Regressiva
+                    </p>
                   </div>
-                  <div className="rounded-lg bg-zinc-900/80 border border-zinc-800 px-3 py-2 text-gray-300">
-                    Escolas e talentos independentes
-                  </div>
-                  <div className="rounded-lg bg-zinc-900/80 border border-zinc-800 px-3 py-2 text-gray-300">
-                    Dança, arte e competição
-                  </div>
+                  {contagemFestival.encerrado ? (
+                    <p className="text-2xl font-semibold leading-tight text-white md:text-3xl">
+                      O festival começou
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-4 gap-2 md:gap-3">
+                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
+                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
+                          {formatarTempo(contagemFestival.dias)}
+                        </p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
+                          dias
+                        </p>
+                      </div>
+                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
+                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
+                          {formatarTempo(contagemFestival.horas)}
+                        </p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
+                          horas
+                        </p>
+                      </div>
+                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
+                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
+                          {formatarTempo(contagemFestival.minutos)}
+                        </p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
+                          minutos
+                        </p>
+                      </div>
+                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
+                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
+                          {formatarTempo(contagemFestival.segundos)}
+                        </p>
+                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
+                          segundos
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

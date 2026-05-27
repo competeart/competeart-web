@@ -11,6 +11,8 @@ import Admin from "./pages/Admin";
 import AdminCheckIn from "./pages/AdminCheckIn";
 import AdminLogin from "./pages/AdminLogin";
 import CheckInLogin from "./pages/CheckInLogin";
+import Cronograma from "./pages/Cronograma";
+import CronogramaEditar from "./pages/CronogramaEditar";
 import ElencoIndependente from "./pages/ElencoIndependente";
 import CoreografiasIndependente from "./pages/CoreografiasIndependente";
 import ResumoIndependente from "./pages/ResumoIndependente";
@@ -33,6 +35,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/jurados" element={<Jurados />} />
         <Route path="/localizacao" element={<Localizacao />} />
+        <Route path="/cronograma" element={<Cronograma />} />
+        <Route path="/cronograma/editar" element={<CronogramaEditar />} />
         <Route path="/regulamento" element={<RedirecionamentoRegulamento />} />
         <Route path="/inscricao" element={<Inscricao />} />
         <Route path="/inscricao/escola" element={<InscricaoEscola />} />

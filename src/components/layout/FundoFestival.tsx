@@ -17,9 +17,6 @@ export default function FundoFestival({ variante = "padrao" }: FundoFestivalProp
         }`}
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,rgba(0,0,0,0.52)_55%,rgba(0,0,0,0.72)_100%)]" />
-      <div className="pointer-events-none absolute top-24 left-1/2 h-px w-[88%] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-      <div className="pointer-events-none absolute top-24 left-1/2 h-px w-28 -translate-x-1/2 bg-gradient-to-r from-transparent via-orange-300/70 to-transparent varredura-luz" />
-      <div className="pointer-events-none absolute -top-20 right-[-5rem] h-56 w-56 rounded-full bg-orange-500/8 blur-3xl brilho-lento" />
       <div className="pointer-events-none absolute bottom-[-4rem] left-[-4rem] h-52 w-52 rounded-full bg-cyan-400/7 blur-3xl brilho-lento" />
     </>
   );
