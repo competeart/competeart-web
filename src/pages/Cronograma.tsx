@@ -80,6 +80,26 @@ function CardCoreografia({
   );
 }
 
+function NumeroDestaque({
+  numero,
+  variante,
+}: {
+  numero: number;
+  variante: "agora" | "proxima";
+}) {
+  return (
+    <div
+      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border text-lg font-semibold md:h-14 md:w-14 ${
+        variante === "agora"
+          ? "border-orange-300/45 bg-orange-500/15 text-orange-100"
+          : "border-cyan-200/30 bg-cyan-500/10 text-cyan-100"
+      }`}
+    >
+      {numero}
+    </div>
+  );
+}
+
 export default function Cronograma() {
   const [itens, setItens] = useState<ItemCronograma[]>([]);
   const [carregando, setCarregando] = useState(true);
@@ -168,20 +188,23 @@ export default function Cronograma() {
                   Agora no palco
                 </p>
                 {agora ? (
-                  <div className="mt-6">
-                    <h2 className="max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
-                      {agora.nome}
-                    </h2>
-                    <p className="mt-4 text-base text-gray-300 md:text-lg">{agora.escola}</p>
-                    {agora.coreografo && (
-                      <p className="mt-2 text-sm text-gray-400">
-                        Coreógrafo: {agora.coreografo}
-                      </p>
-                    )}
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {agora.contexto && <Etiqueta destaque>{agora.contexto}</Etiqueta>}
-                      {agora.elenco && <Etiqueta destaque>{agora.elenco}</Etiqueta>}
-                      {agora.tempo && <Etiqueta destaque>{agora.tempo}</Etiqueta>}
+                  <div className="mt-6 flex items-start gap-4 md:gap-5">
+                    <NumeroDestaque numero={1} variante="agora" />
+                    <div className="min-w-0 flex-1">
+                      <h2 className="max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
+                        {agora.nome}
+                      </h2>
+                      <p className="mt-4 text-base text-gray-300 md:text-lg">{agora.escola}</p>
+                      {agora.coreografo && (
+                        <p className="mt-2 text-sm text-gray-400">
+                          Coreógrafo: {agora.coreografo}
+                        </p>
+                      )}
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {agora.contexto && <Etiqueta destaque>{agora.contexto}</Etiqueta>}
+                        {agora.elenco && <Etiqueta destaque>{agora.elenco}</Etiqueta>}
+                        {agora.tempo && <Etiqueta destaque>{agora.tempo}</Etiqueta>}
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -197,17 +220,20 @@ export default function Cronograma() {
                   <p className="text-xs uppercase tracking-[0.18em]">A seguir</p>
                 </div>
                 {aSeguir ? (
-                  <div className="mt-5">
-                    <h2 className="text-2xl font-semibold text-white">{aSeguir.nome}</h2>
-                    <p className="mt-3 text-sm text-gray-300">{aSeguir.escola}</p>
-                    {aSeguir.coreografo && (
-                      <p className="mt-2 text-xs text-gray-500">
-                        Coreógrafo: {aSeguir.coreografo}
-                      </p>
-                    )}
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {aSeguir.contexto && <Etiqueta>{aSeguir.contexto}</Etiqueta>}
-                      {aSeguir.tempo && <Etiqueta>{aSeguir.tempo}</Etiqueta>}
+                  <div className="mt-5 flex items-start gap-4">
+                    <NumeroDestaque numero={2} variante="proxima" />
+                    <div className="min-w-0 flex-1">
+                      <h2 className="text-2xl font-semibold text-white">{aSeguir.nome}</h2>
+                      <p className="mt-3 text-sm text-gray-300">{aSeguir.escola}</p>
+                      {aSeguir.coreografo && (
+                        <p className="mt-2 text-xs text-gray-500">
+                          Coreógrafo: {aSeguir.coreografo}
+                        </p>
+                      )}
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {aSeguir.contexto && <Etiqueta>{aSeguir.contexto}</Etiqueta>}
+                        {aSeguir.tempo && <Etiqueta>{aSeguir.tempo}</Etiqueta>}
+                      </div>
                     </div>
                   </div>
                 ) : (
