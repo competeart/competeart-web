@@ -89,13 +89,14 @@ function NumeroDestaque({
 }) {
   return (
     <div
-      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border text-lg font-semibold md:h-14 md:w-14 ${
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ${
         variante === "agora"
           ? "border-orange-300/45 bg-orange-500/15 text-orange-100"
           : "border-cyan-200/30 bg-cyan-500/10 text-cyan-100"
       }`}
     >
-      {numero}
+      <span className="text-sm">{String(numero).padStart(2, "0")}</span>
+      <span>{variante === "agora" ? "Em cena" : "Próxima"}</span>
     </div>
   );
 }
@@ -153,12 +154,12 @@ export default function Cronograma() {
           <p className="text-xs uppercase tracking-[0.2em] text-orange-300">
             Festival ao vivo
           </p>
-          <h1 className="mt-2 font-primary text-3xl text-white md:text-5xl">
-            Cronograma das apresentações
+          <h1 className="mt-2 font-primary text-3xl text-white md:text-4xl">
+            Palco em movimento
           </h1>
-          <p className="mt-3 max-w-3xl leading-relaxed text-gray-300">
-            Acompanhe a ordem do palco em tempo real: a coreografia em exibição,
-            a próxima entrada e toda a sequência do festival.
+          <p className="mt-3 max-w-2xl leading-relaxed text-gray-300">
+            A ordem viva do festival: quem está em cena, quem entra em seguida
+            e a sequência completa das apresentações.
           </p>
         </header>
 
@@ -178,33 +179,28 @@ export default function Cronograma() {
           </div>
         ) : (
           <>
-            <section className="mt-6 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-              <article className="relative overflow-hidden rounded-2xl border border-orange-400/30 bg-zinc-950/70 p-5 shadow-md backdrop-blur-sm md:p-7">
+            <section className="mt-6 space-y-4">
+              <article className="relative overflow-hidden rounded-2xl border border-orange-400/30 bg-zinc-950/70 p-5 shadow-md backdrop-blur-sm md:p-8">
                 <div className="absolute right-5 top-5 inline-flex animate-pulse items-center gap-2 rounded-full border border-red-300/45 bg-red-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-red-100">
                   <Radio size={14} />
                   Ao vivo
                 </div>
-                <p className="text-xs uppercase tracking-[0.2em] text-orange-300">
-                  Agora no palco
-                </p>
                 {agora ? (
-                  <div className="mt-6 flex items-start gap-4 md:gap-5">
+                  <div className="max-w-5xl">
                     <NumeroDestaque numero={1} variante="agora" />
-                    <div className="min-w-0 flex-1">
-                      <h2 className="max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
-                        {agora.nome}
-                      </h2>
-                      <p className="mt-4 text-base text-gray-300 md:text-lg">{agora.escola}</p>
-                      {agora.coreografo && (
-                        <p className="mt-2 text-sm text-gray-400">
-                          Coreógrafo: {agora.coreografo}
-                        </p>
-                      )}
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {agora.contexto && <Etiqueta destaque>{agora.contexto}</Etiqueta>}
-                        {agora.elenco && <Etiqueta destaque>{agora.elenco}</Etiqueta>}
-                        {agora.tempo && <Etiqueta destaque>{agora.tempo}</Etiqueta>}
-                      </div>
+                    <h2 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight text-white md:text-6xl">
+                      {agora.nome}
+                    </h2>
+                    <p className="mt-5 text-lg text-gray-300 md:text-2xl">{agora.escola}</p>
+                    {agora.coreografo && (
+                      <p className="mt-3 text-sm text-gray-400 md:text-base">
+                        Coreógrafo: {agora.coreografo}
+                      </p>
+                    )}
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {agora.contexto && <Etiqueta destaque>{agora.contexto}</Etiqueta>}
+                      {agora.elenco && <Etiqueta destaque>{agora.elenco}</Etiqueta>}
+                      {agora.tempo && <Etiqueta destaque>{agora.tempo}</Etiqueta>}
                     </div>
                   </div>
                 ) : (
@@ -214,26 +210,28 @@ export default function Cronograma() {
                 )}
               </article>
 
-              <article className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5 shadow-md backdrop-blur-sm md:p-6">
-                <div className="flex items-center gap-2 text-cyan-100">
-                  <Clock3 size={17} />
-                  <p className="text-xs uppercase tracking-[0.18em]">A seguir</p>
-                </div>
+              <article className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4 shadow-md backdrop-blur-sm md:p-5">
                 {aSeguir ? (
-                  <div className="mt-5 flex items-start gap-4">
+                  <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
                     <NumeroDestaque numero={2} variante="proxima" />
                     <div className="min-w-0 flex-1">
-                      <h2 className="text-2xl font-semibold text-white">{aSeguir.nome}</h2>
-                      <p className="mt-3 text-sm text-gray-300">{aSeguir.escola}</p>
+                      <div className="flex items-center gap-2 text-cyan-100">
+                        <Clock3 size={15} />
+                        <p className="text-xs uppercase tracking-[0.18em]">A seguir</p>
+                      </div>
+                      <h2 className="mt-2 text-2xl font-semibold text-white md:text-3xl">
+                        {aSeguir.nome}
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300 md:text-base">{aSeguir.escola}</p>
                       {aSeguir.coreografo && (
                         <p className="mt-2 text-xs text-gray-500">
                           Coreógrafo: {aSeguir.coreografo}
                         </p>
                       )}
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {aSeguir.contexto && <Etiqueta>{aSeguir.contexto}</Etiqueta>}
-                        {aSeguir.tempo && <Etiqueta>{aSeguir.tempo}</Etiqueta>}
-                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 md:justify-end">
+                      {aSeguir.contexto && <Etiqueta>{aSeguir.contexto}</Etiqueta>}
+                      {aSeguir.tempo && <Etiqueta>{aSeguir.tempo}</Etiqueta>}
                     </div>
                   </div>
                 ) : (
