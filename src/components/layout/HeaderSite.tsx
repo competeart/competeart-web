@@ -224,7 +224,7 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
                 restrito
                 onClick={() => {
                   setMenuAberto(false);
-                  navegar("/cronograma/editar");
+                  navegar("/coreografias/editar");
                 }}
               />
               <ItemMenuAtivo

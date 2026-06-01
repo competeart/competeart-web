@@ -14,27 +14,7 @@ import {
   reordenarCronograma,
   validarAdmin,
 } from "../lib/api";
-
-type ItemCronograma = {
-  id: string;
-  nome: string;
-  formacao: string;
-  modalidade: string;
-  categoria: string;
-  escola: string;
-  tipoInscricao: "ESCOLA" | "BAILARINO_INDEPENDENTE";
-  quantidadeBailarinos: number;
-  ordemCronograma: number;
-  concluidaCronograma: boolean;
-};
-
-function formatarEnum(valor: string) {
-  return valor
-    .toLowerCase()
-    .split("_")
-    .map((parte) => parte.charAt(0).toUpperCase() + parte.slice(1))
-    .join(" ");
-}
+import type { ItemCronograma } from "../lib/api";
 
 export default function CronogramaEditar() {
   const navegar = useNavigate();
@@ -55,17 +35,23 @@ export default function CronogramaEditar() {
 
     let ativo = true;
 
-    validarAdmin(token).then((valido) => {
-      if (!ativo) return;
+    validarAdmin(token)
+      .then((valido) => {
+        if (!ativo) return;
 
-      if (!valido) {
-        localStorage.removeItem("admin-token");
-        navegar("/admin/login");
-        return;
-      }
+        if (!valido) {
+          localStorage.removeItem("admin-token");
+          navegar("/admin/login");
+          return;
+        }
 
-      setAcessoValidado(true);
-    });
+        setAcessoValidado(true);
+      })
+      .catch(() => {
+        if (!ativo) return;
+        setErro("Erro ao validar acesso administrativo.");
+        setCarregando(false);
+      });
 
     return () => {
       ativo = false;
@@ -242,9 +228,15 @@ export default function CronogramaEditar() {
                       <p className="font-medium text-white">{item.nome}</p>
                       <p className="mt-1 text-sm text-zinc-300">{item.escola}</p>
                       <p className="mt-1 text-xs text-zinc-500">
-                        {formatarEnum(item.formacao)} · {formatarEnum(item.modalidade)} ·{" "}
-                        {item.quantidadeBailarinos} bailarinos
+                        {[item.contexto, item.elenco, item.tempo]
+                          .filter(Boolean)
+                          .join(" · ")}
                       </p>
+                      {item.coreografo && (
+                        <p className="mt-1 text-xs text-zinc-600">
+                          Coreógrafo: {item.coreografo}
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-2 md:justify-end">

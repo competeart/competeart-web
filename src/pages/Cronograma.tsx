@@ -10,31 +10,7 @@ import {
 import HeaderSite from "../components/layout/HeaderSite";
 import FundoFestival from "../components/layout/FundoFestival";
 import { listarCronograma } from "../lib/api";
-
-type ItemCronograma = {
-  id: string;
-  nome: string;
-  formacao: string;
-  modalidade: string;
-  categoria: string;
-  escola: string;
-  tipoInscricao: "ESCOLA" | "BAILARINO_INDEPENDENTE";
-  quantidadeBailarinos: number;
-  ordemCronograma: number;
-  concluidaCronograma: boolean;
-};
-
-function formatarEnum(valor: string) {
-  return valor
-    .toLowerCase()
-    .split("_")
-    .map((parte) => parte.charAt(0).toUpperCase() + parte.slice(1))
-    .join(" ");
-}
-
-function pluralizarBailarinos(quantidade: number) {
-  return quantidade === 1 ? "1 bailarino" : `${quantidade} bailarinos`;
-}
+import type { ItemCronograma } from "../lib/api";
 
 function Etiqueta({
   children,
@@ -90,11 +66,13 @@ function CardCoreografia({
             )}
           </div>
           <p className="mt-2 text-sm text-zinc-300">{item.escola}</p>
+          {item.coreografo && (
+            <p className="mt-1 text-xs text-zinc-500">Coreógrafo: {item.coreografo}</p>
+          )}
           <div className="mt-3 flex flex-wrap gap-2">
-            <Etiqueta>{formatarEnum(item.formacao)}</Etiqueta>
-            <Etiqueta>{formatarEnum(item.modalidade)}</Etiqueta>
-            <Etiqueta>{formatarEnum(item.categoria)}</Etiqueta>
-            <Etiqueta>{pluralizarBailarinos(item.quantidadeBailarinos)}</Etiqueta>
+            {item.contexto && <Etiqueta>{item.contexto}</Etiqueta>}
+            {item.elenco && <Etiqueta>{item.elenco}</Etiqueta>}
+            {item.tempo && <Etiqueta>{item.tempo}</Etiqueta>}
           </div>
         </div>
       </div>
@@ -195,13 +173,15 @@ export default function Cronograma() {
                       {agora.nome}
                     </h2>
                     <p className="mt-4 text-base text-gray-300 md:text-lg">{agora.escola}</p>
+                    {agora.coreografo && (
+                      <p className="mt-2 text-sm text-gray-400">
+                        Coreógrafo: {agora.coreografo}
+                      </p>
+                    )}
                     <div className="mt-5 flex flex-wrap gap-2">
-                      <Etiqueta destaque>{formatarEnum(agora.formacao)}</Etiqueta>
-                      <Etiqueta destaque>{formatarEnum(agora.modalidade)}</Etiqueta>
-                      <Etiqueta destaque>{formatarEnum(agora.categoria)}</Etiqueta>
-                      <Etiqueta destaque>
-                        {pluralizarBailarinos(agora.quantidadeBailarinos)}
-                      </Etiqueta>
+                      {agora.contexto && <Etiqueta destaque>{agora.contexto}</Etiqueta>}
+                      {agora.elenco && <Etiqueta destaque>{agora.elenco}</Etiqueta>}
+                      {agora.tempo && <Etiqueta destaque>{agora.tempo}</Etiqueta>}
                     </div>
                   </div>
                 ) : (
@@ -220,9 +200,14 @@ export default function Cronograma() {
                   <div className="mt-5">
                     <h2 className="text-2xl font-semibold text-white">{aSeguir.nome}</h2>
                     <p className="mt-3 text-sm text-gray-300">{aSeguir.escola}</p>
+                    {aSeguir.coreografo && (
+                      <p className="mt-2 text-xs text-gray-500">
+                        Coreógrafo: {aSeguir.coreografo}
+                      </p>
+                    )}
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <Etiqueta>{formatarEnum(aSeguir.formacao)}</Etiqueta>
-                      <Etiqueta>{formatarEnum(aSeguir.modalidade)}</Etiqueta>
+                      {aSeguir.contexto && <Etiqueta>{aSeguir.contexto}</Etiqueta>}
+                      {aSeguir.tempo && <Etiqueta>{aSeguir.tempo}</Etiqueta>}
                     </div>
                   </div>
                 ) : (

@@ -381,7 +381,19 @@ function obterHeadersAdmin(): Record<string, string> {
   return { "x-admin-key": adminToken };
 }
 
-export async function listarCronograma() {
+export type ItemCronograma = {
+  id: string;
+  ordemCronograma: number;
+  nome: string;
+  escola: string;
+  tempo: string;
+  elenco: string;
+  coreografo: string;
+  contexto: string;
+  concluidaCronograma: boolean;
+};
+
+export async function listarCronograma(): Promise<ItemCronograma[]> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/cronograma`);
 
   if (!response.ok) {
@@ -391,7 +403,9 @@ export async function listarCronograma() {
   return response.json();
 }
 
-export async function reordenarCronograma(coreografiasIds: string[]) {
+export async function reordenarCronograma(
+  coreografiasIds: string[],
+): Promise<ItemCronograma[]> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}/cronograma/ordem`, {
     method: "PUT",
     headers: {
@@ -404,7 +418,7 @@ export async function reordenarCronograma(coreografiasIds: string[]) {
   if (response.status === 401) {
     localStorage.removeItem("admin-token");
     window.location.href = "/admin/login";
-    return;
+    return [];
   }
 
   if (!response.ok) {
@@ -417,7 +431,7 @@ export async function reordenarCronograma(coreografiasIds: string[]) {
 export async function marcarConclusaoCronograma(
   coreografiaId: string,
   concluida: boolean,
-) {
+): Promise<ItemCronograma[]> {
   const response = await fetch(
     `${import.meta.env.VITE_API_URL}/cronograma/${coreografiaId}/conclusao`,
     {
@@ -433,7 +447,7 @@ export async function marcarConclusaoCronograma(
   if (response.status === 401) {
     localStorage.removeItem("admin-token");
     window.location.href = "/admin/login";
-    return;
+    return [];
   }
 
   if (!response.ok) {

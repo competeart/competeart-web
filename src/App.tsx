@@ -35,6 +35,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/jurados" element={<Jurados />} />
         <Route path="/localizacao" element={<Localizacao />} />
+        <Route path="/coreografias" element={<Cronograma />} />
+        <Route path="/coreografias/editar" element={<CronogramaEditar />} />
         <Route path="/cronograma" element={<Cronograma />} />
         <Route path="/cronograma/editar" element={<CronogramaEditar />} />
         <Route path="/regulamento" element={<RedirecionamentoRegulamento />} />
