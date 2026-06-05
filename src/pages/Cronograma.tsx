@@ -34,10 +34,8 @@ function Etiqueta({
 
 function CardCoreografia({
   item,
-  indice,
 }: {
   item: ItemCronograma;
-  indice: number;
 }) {
   return (
     <article
@@ -55,7 +53,11 @@ function CardCoreografia({
               : "border-orange-300/35 bg-orange-500/15 text-orange-100"
           }`}
         >
-          {item.concluidaCronograma ? <CheckCircle2 size={18} /> : indice + 1}
+          {item.concluidaCronograma ? (
+            <CheckCircle2 size={18} />
+          ) : (
+            item.ordemCronograma
+          )}
         </div>
 
         <div className="min-w-0 flex-1">
@@ -187,7 +189,7 @@ export default function Cronograma() {
                 </div>
                 {agora ? (
                   <div className="max-w-5xl">
-                    <NumeroDestaque numero={1} variante="agora" />
+                    <NumeroDestaque numero={agora.ordemCronograma} variante="agora" />
                     <h2 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight text-white md:text-6xl">
                       {agora.nome}
                     </h2>
@@ -213,7 +215,7 @@ export default function Cronograma() {
               <article className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4 shadow-md backdrop-blur-sm md:p-5">
                 {aSeguir ? (
                   <div className="grid gap-4 md:grid-cols-[auto_1fr_auto] md:items-center">
-                    <NumeroDestaque numero={2} variante="proxima" />
+                    <NumeroDestaque numero={aSeguir.ordemCronograma} variante="proxima" />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 text-cyan-100">
                         <Clock3 size={15} />
@@ -253,8 +255,8 @@ export default function Cronograma() {
 
                 {cronogramaRestante.length > 0 ? (
                   <div className="space-y-3">
-                    {cronogramaRestante.map((item, index) => (
-                      <CardCoreografia key={item.id} item={item} indice={index + 2} />
+                    {cronogramaRestante.map((item) => (
+                      <CardCoreografia key={item.id} item={item} />
                     ))}
                   </div>
                 ) : (
