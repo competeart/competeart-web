@@ -1,18 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CalendarDays, Clock3, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, MapPin, Radio } from "lucide-react";
 import HeaderSite from "../components/layout/HeaderSite";
+import { listarCronograma } from "../lib/api";
+import type { ItemCronograma } from "../lib/api";
 
 const PALAVRAS_DINAMICAS = ["arte", "movimento", "palco", "competição"];
-const DATA_FESTIVAL = new Date(2026, 5, 5, 9, 0, 0);
-const UM_SEGUNDO = 1000;
-const UM_MINUTO = 1000 * 60;
-const UMA_HORA = UM_MINUTO * 60;
-const UM_DIA = UMA_HORA * 24;
-
-function formatarTempo(valor: number) {
-  return String(valor).padStart(2, "0");
-}
 
 export default function Home() {
   const navegar = useNavigate();
@@ -21,24 +14,20 @@ export default function Home() {
   const [indicePalavra, setIndicePalavra] = useState(0);
   const [animarPalavra, setAnimarPalavra] = useState(true);
   const [videoFalhou, setVideoFalhou] = useState(false);
-  const [agora, setAgora] = useState(() => Date.now());
+  const [cronograma, setCronograma] = useState<ItemCronograma[]>([]);
+  const [carregandoCronograma, setCarregandoCronograma] = useState(true);
 
   const palavraAtual = useMemo(
     () => PALAVRAS_DINAMICAS[indicePalavra],
     [indicePalavra],
   );
 
-  const contagemFestival = useMemo(() => {
-    const restante = Math.max(0, DATA_FESTIVAL.getTime() - agora);
-
-    return {
-      dias: Math.floor(restante / UM_DIA),
-      horas: Math.floor((restante % UM_DIA) / UMA_HORA),
-      minutos: Math.floor((restante % UMA_HORA) / UM_MINUTO),
-      segundos: Math.floor((restante % UM_MINUTO) / UM_SEGUNDO),
-      encerrado: restante === 0,
-    };
-  }, [agora]);
+  const coreografiasPendentes = useMemo(
+    () => cronograma.filter((item) => !item.concluidaCronograma),
+    [cronograma],
+  );
+  const agoraNoPalco = coreografiasPendentes[0];
+  const aSeguir = coreografiasPendentes[1];
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -52,11 +41,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const intervalo = window.setInterval(() => setAgora(Date.now()), UM_SEGUNDO);
-    return () => window.clearInterval(intervalo);
-  }, []);
-
-  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
@@ -64,6 +48,27 @@ export default function Home() {
     video.play().catch(() => {
       // Fallback visual permanece quando autoplay for bloqueado.
     });
+  }, []);
+
+  useEffect(() => {
+    let ativo = true;
+
+    listarCronograma()
+      .then((dados) => {
+        if (!ativo) return;
+        setCronograma(dados || []);
+      })
+      .catch(() => {
+        if (!ativo) return;
+        setCronograma([]);
+      })
+      .finally(() => {
+        if (ativo) setCarregandoCronograma(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
   }, []);
 
   return (
@@ -169,52 +174,66 @@ export default function Home() {
 
                 <div className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-black/55 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.28)] md:p-5">
                   <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
-                  <div className="mb-4">
+                  <div className="mb-4 flex items-center justify-between gap-3">
                     <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-orange-300">
-                      <Clock3 size={14} />
-                      Contagem Regressiva
+                      <Radio size={14} />
+                      Ao vivo agora
                     </p>
+                    <span className="inline-flex animate-pulse rounded-full border border-red-300/35 bg-red-500/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-red-100">
+                      Live
+                    </span>
                   </div>
-                  {contagemFestival.encerrado ? (
-                    <p className="text-2xl font-semibold leading-tight text-white md:text-3xl">
-                      O festival começou
-                    </p>
-                  ) : (
-                    <div className="grid grid-cols-4 gap-2 md:gap-3">
-                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
-                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
-                          {formatarTempo(contagemFestival.dias)}
-                        </p>
-                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
-                          dias
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
-                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
-                          {formatarTempo(contagemFestival.horas)}
-                        </p>
-                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
-                          horas
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
-                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
-                          {formatarTempo(contagemFestival.minutos)}
-                        </p>
-                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
-                          minutos
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 px-3 py-3 text-center">
-                        <p className="font-mono text-2xl font-semibold leading-none text-white md:text-3xl">
-                          {formatarTempo(contagemFestival.segundos)}
-                        </p>
-                        <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
-                          segundos
-                        </p>
+
+                  {carregandoCronograma ? (
+                    <p className="text-sm text-zinc-400">Carregando cronograma...</p>
+                  ) : agoraNoPalco ? (
+                    <div>
+                      <h2 className="text-2xl font-semibold leading-tight text-white md:text-3xl">
+                        {agoraNoPalco.nome}
+                      </h2>
+                      <p className="mt-2 text-sm font-medium text-zinc-300">
+                        {agoraNoPalco.escola}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {agoraNoPalco.contexto && (
+                          <span className="rounded-full border border-rose-300/35 bg-rose-500/15 px-3 py-1 text-xs text-rose-100">
+                            {agoraNoPalco.contexto}
+                          </span>
+                        )}
+                        {agoraNoPalco.tempo && (
+                          <span className="rounded-full border border-rose-300/35 bg-rose-500/15 px-3 py-1 text-xs text-rose-100">
+                            {agoraNoPalco.tempo}
+                          </span>
+                        )}
                       </div>
                     </div>
+                  ) : (
+                    <p className="text-sm text-zinc-400">
+                      O cronograma ao vivo ainda não está disponível.
+                    </p>
                   )}
+
+                  {aSeguir && (
+                    <div className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 p-4">
+                      <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-cyan-100">
+                        <Clock3 size={13} />
+                        A seguir
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
+                        {aSeguir.nome}
+                      </h3>
+                      <p className="mt-1 text-sm text-zinc-400">{aSeguir.escola}</p>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => navegar("/cronograma")}
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-orange-300 transition hover:text-orange-200"
+                  >
+                    Ver cronograma completo
+                    <ArrowRight size={15} />
+                  </button>
                 </div>
               </div>
             </div>
