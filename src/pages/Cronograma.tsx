@@ -166,17 +166,15 @@ export default function Cronograma() {
           <HeaderSite />
         </div>
 
-        <header className="rounded-2xl border border-zinc-800 bg-zinc-950/65 p-5 backdrop-blur-sm md:p-7">
-          <p className="text-xs uppercase tracking-[0.2em] text-orange-300">
-            Festival ao vivo
-          </p>
-          <h1 className="mt-2 font-primary text-3xl text-white md:text-4xl">
-            Palco em movimento
-          </h1>
-          <p className="mt-3 max-w-2xl leading-relaxed text-gray-300">
-            A ordem viva do festival: quem está em cena, quem entra em seguida
-            e a sequência completa das apresentações.
-          </p>
+        <header className="relative overflow-hidden rounded-2xl border border-orange-400/20 bg-zinc-950/70 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-sm md:px-7">
+          <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/60 to-transparent" />
+          <span className="pointer-events-none absolute -left-16 top-1/2 h-28 w-28 -translate-y-1/2 rounded-full bg-orange-500/10 blur-2xl" />
+          <div className="relative flex items-center gap-4">
+            <span className="h-12 w-1 rounded-full bg-gradient-to-b from-orange-300 via-orange-500 to-rose-500 shadow-[0_0_24px_rgba(249,115,22,0.45)]" />
+            <h1 className="font-primary text-3xl leading-tight text-orange-400 md:text-4xl">
+              Cronograma Oficial Compete&apos;Art
+            </h1>
+          </div>
         </header>
 
         {erro && (
