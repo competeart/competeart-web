@@ -180,7 +180,9 @@ export default function Home() {
                     <div className="space-y-4">
                       <div>
                         <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300">
-                          <span className="text-orange-100">01</span>
+                          <span className="text-orange-100">
+                            {agoraNoPalco.ordemCronograma}
+                          </span>
                           <span className="h-1.5 w-1.5 rounded-full bg-red-400 shadow-[0_0_14px_rgba(248,113,113,0.9)]" />
                           Ao vivo
                         </p>
@@ -192,7 +194,9 @@ export default function Home() {
                       {aSeguir && (
                         <div className="border-t border-zinc-800 pt-4">
                           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">
-                            <span className="text-cyan-50">02</span>
+                            <span className="text-cyan-50">
+                              {aSeguir.ordemCronograma}
+                            </span>
                             <span className="mx-2 text-zinc-600">-</span>
                             A seguir
                           </p>
