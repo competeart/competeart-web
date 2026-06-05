@@ -6,6 +6,7 @@ import { listarCronograma } from "../lib/api";
 import type { ItemCronograma } from "../lib/api";
 
 const PALAVRAS_DINAMICAS = ["arte", "movimento", "palco", "competição"];
+const INTERVALO_ATUALIZACAO_CRONOGRAMA = 5000;
 
 export default function Home() {
   const navegar = useNavigate();
@@ -52,22 +53,34 @@ export default function Home() {
 
   useEffect(() => {
     let ativo = true;
+    let primeiraCarga = true;
 
-    listarCronograma()
-      .then((dados) => {
-        if (!ativo) return;
-        setCronograma(dados || []);
-      })
-      .catch(() => {
-        if (!ativo) return;
-        setCronograma([]);
-      })
-      .finally(() => {
-        if (ativo) setCarregandoCronograma(false);
-      });
+    function carregarCronograma() {
+      listarCronograma()
+        .then((dados) => {
+          if (!ativo) return;
+          setCronograma(dados || []);
+        })
+        .catch(() => {
+          if (!ativo || !primeiraCarga) return;
+          setCronograma([]);
+        })
+        .finally(() => {
+          if (!ativo) return;
+          setCarregandoCronograma(false);
+          primeiraCarga = false;
+        });
+    }
+
+    carregarCronograma();
+    const intervalo = window.setInterval(
+      carregarCronograma,
+      INTERVALO_ATUALIZACAO_CRONOGRAMA,
+    );
 
     return () => {
       ativo = false;
+      window.clearInterval(intervalo);
     };
   }, []);
 

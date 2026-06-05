@@ -12,6 +12,8 @@ import FundoFestival from "../components/layout/FundoFestival";
 import { listarCronograma } from "../lib/api";
 import type { ItemCronograma } from "../lib/api";
 
+const INTERVALO_ATUALIZACAO_CRONOGRAMA = 5000;
+
 function Etiqueta({
   children,
   destaque = false,
@@ -110,23 +112,35 @@ export default function Cronograma() {
 
   useEffect(() => {
     let ativo = true;
+    let primeiraCarga = true;
 
-    listarCronograma()
-      .then((dados) => {
-        if (!ativo) return;
-        setItens(dados || []);
-        setErro("");
-      })
-      .catch((error) => {
-        if (!ativo) return;
-        setErro(error instanceof Error ? error.message : "Erro ao carregar cronograma.");
-      })
-      .finally(() => {
-        if (ativo) setCarregando(false);
-      });
+    function carregarCronograma() {
+      listarCronograma()
+        .then((dados) => {
+          if (!ativo) return;
+          setItens(dados || []);
+          setErro("");
+        })
+        .catch((error) => {
+          if (!ativo || !primeiraCarga) return;
+          setErro(error instanceof Error ? error.message : "Erro ao carregar cronograma.");
+        })
+        .finally(() => {
+          if (!ativo) return;
+          setCarregando(false);
+          primeiraCarga = false;
+        });
+    }
+
+    carregarCronograma();
+    const intervalo = window.setInterval(
+      carregarCronograma,
+      INTERVALO_ATUALIZACAO_CRONOGRAMA,
+    );
 
     return () => {
       ativo = false;
+      window.clearInterval(intervalo);
     };
   }, []);
 
