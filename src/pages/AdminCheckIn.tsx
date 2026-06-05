@@ -17,14 +17,14 @@ import {
 
 type ParticipanteCheckIn = {
   id: string;
-  bailarinoId: string;
+  bailarinoId: string | null;
   nomeCompleto: string;
-  tipoDocumento: "CPF" | "RG";
+  tipoDocumento: "CPF" | "RG" | "NAO_INFORMADO";
   documento: string;
-  coreografiaId: string;
+  coreografiaId: string | null;
   coreografia: string;
   escola: string;
-  tipoInscricao: "ESCOLA" | "BAILARINO_INDEPENDENTE";
+  tipoInscricao: "ESCOLA" | "BAILARINO_INDEPENDENTE" | "DIRETOR";
   fezCheckIn: boolean;
 };
 
@@ -35,7 +35,11 @@ type EscolaCheckIn = {
 
 type FiltroCheckIn = "TODOS" | "FEITO" | "PENDENTE";
 
-function formatarDocumento(tipoDocumento: "CPF" | "RG", documento: string) {
+function formatarDocumento(tipoDocumento: ParticipanteCheckIn["tipoDocumento"], documento: string) {
+  if (tipoDocumento === "NAO_INFORMADO") {
+    return "Não informado";
+  }
+
   if (tipoDocumento === "RG") {
     const caracteres = documento.toUpperCase().replace(/[^0-9X]/g, "").slice(0, 9);
     if (caracteres.length <= 2) return caracteres;
@@ -51,6 +55,12 @@ function formatarDocumento(tipoDocumento: "CPF" | "RG", documento: string) {
   if (numeros.length !== 11) return documento;
 
   return `${numeros.slice(0, 3)}.${numeros.slice(3, 6)}.${numeros.slice(6, 9)}-${numeros.slice(9, 11)}`;
+}
+
+function formatarTipoInscricao(tipoInscricao: ParticipanteCheckIn["tipoInscricao"]) {
+  if (tipoInscricao === "DIRETOR") return "Diretor(a)";
+  if (tipoInscricao === "ESCOLA") return "Escola";
+  return "Bailarino independente";
 }
 
 export default function AdminCheckIn() {
@@ -198,7 +208,7 @@ export default function AdminCheckIn() {
               Busca de participantes
             </h1>
             <p className="mt-2 text-sm text-zinc-300">
-              Consulte bailarinos por nome para localizar documento e escola.
+              Consulte participantes e diretores por nome ou CPF para localizar escola.
             </p>
           </div>
 
@@ -216,7 +226,7 @@ export default function AdminCheckIn() {
           <div className="flex flex-col gap-3 md:flex-row md:items-end">
             <div className="flex-1">
               <label htmlFor="busca-check-in" className="text-sm text-zinc-300">
-                Nome do participante
+                Nome ou CPF
               </label>
               <div className="relative mt-2">
                 <Search
@@ -227,7 +237,7 @@ export default function AdminCheckIn() {
                   id="busca-check-in"
                   value={termoBusca}
                   onChange={(evento) => setTermoBusca(evento.target.value)}
-                  placeholder="Digite pelo menos 2 letras"
+                  placeholder="Digite nome ou CPF"
                   className="h-11 w-full rounded-lg border border-zinc-700 bg-zinc-900 pl-10 pr-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-orange-300/45"
                 />
               </div>
@@ -353,7 +363,9 @@ export default function AdminCheckIn() {
                     </td>
                     <td className="px-4 py-3.5 text-zinc-200">
                       <span className="text-zinc-500">
-                        {participante.tipoDocumento}
+                        {participante.tipoDocumento === "NAO_INFORMADO"
+                          ? "CPF"
+                          : participante.tipoDocumento}
                       </span>{" "}
                       {formatarDocumento(
                         participante.tipoDocumento,
@@ -363,9 +375,7 @@ export default function AdminCheckIn() {
                     <td className="px-4 py-3.5">
                       <p className="text-zinc-200">{participante.escola}</p>
                       <p className="mt-1 text-xs text-zinc-500">
-                        {participante.tipoInscricao === "ESCOLA"
-                          ? "Escola"
-                          : "Bailarino independente"}
+                        {formatarTipoInscricao(participante.tipoInscricao)}
                       </p>
                     </td>
                     <td className="px-4 py-3.5 text-right">

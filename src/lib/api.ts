@@ -347,7 +347,7 @@ export async function fazerCheckInParticipante(id: string) {
   }
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/check-in/participantes/${id}/check-in`,
+    `${import.meta.env.VITE_API_URL}/check-in/participantes/${encodeURIComponent(id)}/check-in`,
     {
       method: "PATCH",
       headers: {
