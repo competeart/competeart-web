@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, CalendarDays, Clock3, MapPin, Radio } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import HeaderSite from "../components/layout/HeaderSite";
 import { listarCronograma } from "../lib/api";
 import type { ItemCronograma } from "../lib/api";
@@ -174,37 +174,43 @@ export default function Home() {
 
                 <div className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-black/55 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.28)] md:p-5">
                   <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-orange-300">
-                      <Radio size={14} />
-                      Ao vivo agora
-                    </p>
-                    <span className="inline-flex animate-pulse rounded-full border border-red-300/35 bg-red-500/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-red-100">
-                      Live
-                    </span>
-                  </div>
-
                   {carregandoCronograma ? (
                     <p className="text-sm text-zinc-400">Carregando cronograma...</p>
                   ) : agoraNoPalco ? (
-                    <div>
-                      <h2 className="text-2xl font-semibold leading-tight text-white md:text-3xl">
-                        {agoraNoPalco.nome}
-                      </h2>
-                      <p className="mt-2 text-sm font-medium text-zinc-300">
-                        {agoraNoPalco.escola}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {agoraNoPalco.contexto && (
-                          <span className="rounded-full border border-rose-300/35 bg-rose-500/15 px-3 py-1 text-xs text-rose-100">
-                            {agoraNoPalco.contexto}
-                          </span>
-                        )}
-                        {agoraNoPalco.tempo && (
-                          <span className="rounded-full border border-rose-300/35 bg-rose-500/15 px-3 py-1 text-xs text-rose-100">
-                            {agoraNoPalco.tempo}
-                          </span>
-                        )}
+                    <div className="space-y-4">
+                      <div>
+                        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300">
+                          <span className="text-orange-100">01</span>
+                          <span className="h-1.5 w-1.5 rounded-full bg-red-400 shadow-[0_0_14px_rgba(248,113,113,0.9)]" />
+                          Ao vivo
+                        </p>
+                        <h2 className="mt-2 text-2xl font-semibold leading-tight text-white md:text-3xl">
+                          {agoraNoPalco.nome}
+                        </h2>
+                      </div>
+
+                      {aSeguir && (
+                        <div className="border-t border-zinc-800 pt-4">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                            <span className="text-cyan-50">02</span>
+                            <span className="mx-2 text-zinc-600">-</span>
+                            A seguir
+                          </p>
+                          <h3 className="mt-2 text-lg font-semibold leading-snug text-white md:text-xl">
+                            {aSeguir.nome}
+                          </h3>
+                        </div>
+                      )}
+
+                      <div className="border-t border-zinc-800 pt-4">
+                        <button
+                          type="button"
+                          onClick={() => navegar("/cronograma")}
+                          className="inline-flex items-center gap-2 text-sm font-medium text-orange-300 transition hover:text-orange-200"
+                        >
+                          Confira o cronograma completo
+                          <ArrowRight size={15} />
+                        </button>
                       </div>
                     </div>
                   ) : (
@@ -212,28 +218,6 @@ export default function Home() {
                       O cronograma ao vivo ainda não está disponível.
                     </p>
                   )}
-
-                  {aSeguir && (
-                    <div className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 p-4">
-                      <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-cyan-100">
-                        <Clock3 size={13} />
-                        A seguir
-                      </p>
-                      <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
-                        {aSeguir.nome}
-                      </h3>
-                      <p className="mt-1 text-sm text-zinc-400">{aSeguir.escola}</p>
-                    </div>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => navegar("/cronograma")}
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-orange-300 transition hover:text-orange-200"
-                  >
-                    Ver cronograma completo
-                    <ArrowRight size={15} />
-                  </button>
                 </div>
               </div>
             </div>
