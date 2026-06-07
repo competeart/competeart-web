@@ -113,7 +113,7 @@ export default function Home() {
                       Obrigado por viver esse palco com a gente.
                     </h2>
                     <p className="mt-4 text-base leading-relaxed text-zinc-300">
-                      A edição 2026 chegou ao fim. Nos vemos em breve para novos
+                      A primeira edição chegou ao fim. Nos vemos em breve para novos
                       encontros, novas apresentações e mais dança.
                     </p>
                   </div>
