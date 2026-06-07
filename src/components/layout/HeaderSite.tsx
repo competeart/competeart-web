@@ -15,6 +15,7 @@ import {
   Home,
 } from "lucide-react";
 import { abrirRegulamentoEmNovaAba } from "../../lib/regulamento";
+import { abrirResultadosFestivalEmNovaAba } from "../../lib/resultadosFestival";
 
 interface HeaderSiteProps {
   className?: string;
@@ -91,6 +92,11 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
   function abrirRegulamento() {
     setMenuAberto(false);
     abrirRegulamentoEmNovaAba();
+  }
+
+  function abrirNotas() {
+    setMenuAberto(false);
+    abrirResultadosFestivalEmNovaAba();
   }
 
   return (
@@ -185,6 +191,13 @@ export default function HeaderSite({ className = "", sobreFundo = false }: Heade
             titulo="Regulamento"
             subtitulo="Regras oficiais do festival"
             onClick={abrirRegulamento}
+            externo
+          />
+          <ItemMenuAtivo
+            icone={FileText}
+            titulo="Notas"
+            subtitulo="Resultado do festival"
+            onClick={abrirNotas}
             externo
           />
           {!adminLogado && !moderadorLogado && (
