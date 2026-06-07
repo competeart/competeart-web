@@ -101,32 +101,30 @@ export default function Home() {
 
           <div className="relative">
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-500/10 via-transparent to-pink-500/10 blur-2xl" />
-            <div className="relative rounded-3xl border border-zinc-700 bg-zinc-950/70 backdrop-blur-md p-5 md:p-6 shadow-2xl">
-              <div className="relative overflow-hidden rounded-2xl border border-orange-400/25 bg-black/55 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.28)] md:p-6">
-                <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
-                <div className="space-y-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">
-                    Festival encerrado
+            <div className="relative overflow-hidden rounded-3xl border border-orange-400/25 bg-zinc-950/75 p-6 shadow-2xl backdrop-blur-md md:p-8">
+              <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">
+                  Festival encerrado
+                </p>
+                <div>
+                  <h2 className="text-3xl font-primary leading-tight text-white md:text-4xl">
+                    Obrigado por viver esse palco com a gente.
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-zinc-300">
+                    A primeira edição chegou ao fim. Nos vemos em breve para novos
+                    encontros, novas apresentações e mais dança.
                   </p>
-                  <div>
-                    <h2 className="text-3xl font-primary leading-tight text-white md:text-4xl">
-                      Obrigado por viver esse palco com a gente.
-                    </h2>
-                    <p className="mt-4 text-base leading-relaxed text-zinc-300">
-                      A primeira edição chegou ao fim. Nos vemos em breve para novos
-                      encontros, novas apresentações e mais dança.
-                    </p>
-                  </div>
-                  <a
-                    href={RESULTADOS_FESTIVAL_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-orange-400 px-5 py-3 text-sm font-semibold text-zinc-950 shadow-[0_18px_40px_rgba(249,115,22,0.22)] transition hover:bg-orange-300"
-                  >
-                    Ver resultado do festival
-                    <ExternalLink size={15} />
-                  </a>
                 </div>
+                <a
+                  href={RESULTADOS_FESTIVAL_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-orange-400 px-5 py-3 text-sm font-semibold text-zinc-950 shadow-[0_18px_40px_rgba(249,115,22,0.22)] transition hover:bg-orange-300"
+                >
+                  Ver resultado do festival
+                  <ExternalLink size={15} />
+                </a>
               </div>
             </div>
           </div>
