@@ -47,23 +47,15 @@ export default function Home() {
 
         <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4">
           <div className="max-w-3xl">
-            <div className="home-reveal home-reveal-1 flex items-center gap-4">
+            <div className="home-reveal home-reveal-1">
               <img
                 src="/assets/logo.png"
                 alt="Compete'Art"
                 className="w-36 sm:w-44 md:w-48"
               />
-              <span className="hidden h-px w-20 bg-orange-400/70 sm:block" />
-              <span className="hidden text-[0.67rem] font-semibold uppercase tracking-[0.28em] text-zinc-300 sm:block">
-                Festival de dança
-              </span>
             </div>
 
-            <p className="home-reveal home-reveal-2 mt-12 text-xs font-semibold uppercase tracking-[0.32em] text-orange-400 sm:mt-16">
-              A próxima edição já tem data
-            </p>
-
-            <h1 className="home-reveal home-reveal-3 mt-5 max-w-3xl font-display text-[clamp(3.35rem,8vw,7.25rem)] leading-[0.88] tracking-[-0.045em] text-white">
+            <h1 className="home-reveal home-reveal-3 mt-14 max-w-3xl font-display text-[clamp(3.35rem,8vw,7.25rem)] leading-[0.88] tracking-[-0.045em] text-white sm:mt-20">
               O palco chama
               <span className="block text-orange-400">outra vez.</span>
             </h1>
@@ -74,23 +66,25 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="home-reveal home-reveal-3 lg:justify-self-end">
-            <div className="relative border-y border-white/25 py-7 sm:py-9 lg:w-[25rem]">
-              <span className="absolute -top-px left-0 h-px w-24 bg-orange-400" />
+          <div className="home-reveal home-reveal-2 lg:justify-self-end">
+            <div className="relative border-b border-white/25 pb-7 sm:pb-9 lg:w-[27rem]">
+              <p className="mb-8 text-xs font-semibold uppercase tracking-[0.28em] text-orange-400">
+                A próxima edição já tem data
+              </p>
 
               <time
                 dateTime="2027-06-05"
                 aria-label={PROXIMA_EDICAO.dataCompleta}
-                className="grid grid-cols-[auto_1fr] items-end gap-x-5 sm:gap-x-7"
+                className="grid grid-cols-[auto_1fr] items-end gap-x-6 sm:gap-x-8"
               >
-                <span className="font-display text-[7.8rem] leading-[0.72] tracking-[-0.08em] text-white sm:text-[9.5rem]">
+                <span className="font-display text-[7.2rem] leading-[0.72] tracking-[-0.08em] text-white sm:text-[8.25rem]">
                   {PROXIMA_EDICAO.dia}
                 </span>
-                <div className="pb-1">
-                  <span className="block text-3xl font-semibold leading-none tracking-[-0.04em] text-orange-400 sm:text-4xl">
+                <div className="pb-0.5">
+                  <span className="block text-4xl font-semibold leading-none tracking-[-0.04em] text-orange-400 sm:text-5xl">
                     {PROXIMA_EDICAO.mes}
                   </span>
-                  <span className="mt-2 block text-2xl font-light leading-none tracking-[0.2em] text-white sm:text-3xl">
+                  <span className="mt-3 block text-[1.7rem] font-light leading-none tracking-[0.19em] text-white sm:text-[2.15rem]">
                     {PROXIMA_EDICAO.ano}
                   </span>
                 </div>
