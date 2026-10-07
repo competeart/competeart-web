@@ -3,19 +3,14 @@ import { Check, Copy, ExternalLink, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import HeaderSite from "../components/layout/HeaderSite";
 import FundoFestival from "../components/layout/FundoFestival";
-
-const NOME_LOCAL = "Teatro Oficina do Estudante Iguatemi";
-const ENDERECO_COMPLETO =
-  "Shopping Iguatemi Campinas, Avenida Iguatemi, 777 - Vila Brandina, Campinas - SP";
-
-const URL_MAPA_EMBED =
-  "https://www.google.com/maps?q=Teatro+Oficina+do+Estudante+Iguatemi,+Shopping+Iguatemi+Campinas,+Avenida+Iguatemi,+777,+Campinas+-+SP&output=embed";
-
-const URL_MAPA_EXTERNO =
-  "https://www.google.com/maps/search/?api=1&query=Teatro+Oficina+do+Estudante+Iguatemi,+Shopping+Iguatemi+Campinas,+Avenida+Iguatemi,+777,+Campinas+-+SP";
+import { PROXIMA_EDICAO } from "../data/evento";
 
 export default function Localizacao() {
   const [copiado, setCopiado] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!copiado) return;
@@ -26,7 +21,7 @@ export default function Localizacao() {
 
   async function copiarEndereco() {
     try {
-      await navigator.clipboard.writeText(ENDERECO_COMPLETO);
+      await navigator.clipboard.writeText(PROXIMA_EDICAO.endereco);
       setCopiado(true);
     } catch {
       setCopiado(false);
@@ -53,9 +48,14 @@ export default function Localizacao() {
             </div>
 
             <h1 className="mt-4 font-primary text-3xl md:text-4xl">Localização</h1>
-            <h2 className="mt-4 text-xl md:text-2xl font-semibold text-orange-300">{NOME_LOCAL}</h2>
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-400">
+              {PROXIMA_EDICAO.dataCompleta}
+            </p>
+            <h2 className="mt-3 text-xl md:text-2xl font-semibold text-orange-300">
+              {PROXIMA_EDICAO.local}
+            </h2>
 
-            <p className="mt-3 text-gray-300 leading-relaxed">{ENDERECO_COMPLETO}</p>
+            <p className="mt-3 text-gray-300 leading-relaxed">{PROXIMA_EDICAO.endereco}</p>
 
             <button
               type="button"
@@ -74,7 +74,7 @@ export default function Localizacao() {
           <article className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-3 md:p-4 shadow-md backdrop-blur-sm">
             <div className="overflow-hidden rounded-xl border border-zinc-800 bg-black/30 shadow-sm">
               <iframe
-                src={URL_MAPA_EMBED}
+                src={PROXIMA_EDICAO.mapaEmbed}
                 title="Mapa do Teatro Oficina do Estudante Iguatemi"
                 className="h-[420px] w-full md:h-[450px]"
                 loading="lazy"
@@ -83,7 +83,7 @@ export default function Localizacao() {
             </div>
 
             <a
-              href={URL_MAPA_EXTERNO}
+              href={PROXIMA_EDICAO.mapaExterno}
               target="_blank"
               rel="noreferrer"
               className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-orange-500/35 bg-orange-500/10 px-4 py-3 text-sm font-semibold text-orange-200 transition hover:bg-orange-500/20 hover:text-orange-100 md:w-auto"

@@ -33,6 +33,46 @@
   }
 }
 
+.font-display {
+  font-family: "TAN Nimbus", "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.bg-grade-editorial {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 100% 4.5rem;
+  mask-image: linear-gradient(to bottom, transparent 8%, black 32%, black 82%, transparent 100%);
+}
+
+@keyframes homeReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-reveal {
+  opacity: 0;
+  animation: homeReveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.home-reveal-1 { animation-delay: 0.05s; }
+.home-reveal-2 { animation-delay: 0.14s; }
+.home-reveal-3 { animation-delay: 0.23s; }
+.home-reveal-4 { animation-delay: 0.32s; }
+.home-reveal-5 { animation-delay: 0.41s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-reveal {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(100%);

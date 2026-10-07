@@ -1,32 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { ExternalLink } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import HeaderSite from "../components/layout/HeaderSite";
-import { RESULTADOS_FESTIVAL_URL } from "../lib/resultadosFestival";
-
-const PALAVRAS_DINAMICAS = ["arte", "movimento", "palco", "competição"];
+import { PROXIMA_EDICAO } from "../data/evento";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const [indicePalavra, setIndicePalavra] = useState(0);
-  const [animarPalavra, setAnimarPalavra] = useState(true);
   const [videoFalhou, setVideoFalhou] = useState(false);
-
-  const palavraAtual = useMemo(
-    () => PALAVRAS_DINAMICAS[indicePalavra],
-    [indicePalavra],
-  );
-
-  useEffect(() => {
-    const intervalo = setInterval(() => {
-      setAnimarPalavra(false);
-      window.setTimeout(() => {
-        setIndicePalavra((atual) => (atual + 1) % PALAVRAS_DINAMICAS.length);
-        setAnimarPalavra(true);
-      }, 50);
-    }, 1900);
-    return () => clearInterval(intervalo);
-  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -39,7 +20,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-black">
+    <main className="relative min-h-[100svh] overflow-hidden bg-[#080808]">
       {!videoFalhou && (
         <video
           ref={videoRef}
@@ -48,88 +29,104 @@ export default function Home() {
           playsInline
           muted
           preload="auto"
-          poster="/assets/adminbg.jpg"
           onError={() => setVideoFalhou(true)}
-          className="absolute inset-0 z-0 h-full w-full object-cover"
+          className="absolute inset-0 z-0 h-full w-full object-cover grayscale-[20%]"
         >
           <source src="/videos/bg-video.mp4" type="video/mp4" />
         </video>
       )}
 
-      <div className="absolute inset-0 z-10 bg-black/70" />
-      <div className="absolute inset-0 z-10 bg-grade-sutil opacity-30" />
-      <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_20%_25%,rgba(249,115,22,0.18),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(244,114,182,0.14),transparent_40%),radial-gradient(circle_at_50%_90%,rgba(34,211,238,0.10),transparent_45%)]" />
-     
-      <div className="relative z-30 min-h-screen px-6 py-6 md:px-10 md:py-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.96)_0%,rgba(5,5,5,0.79)_46%,rgba(5,5,5,0.34)_100%)]" />
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.5)_0%,transparent_35%,rgba(0,0,0,0.72)_100%)]" />
+      <div className="absolute inset-0 z-10 bg-grade-editorial opacity-50" />
+
+      <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
+        <div className="mx-auto w-full max-w-7xl">
           <HeaderSite sobreFundo />
         </div>
 
-        <div className="max-w-6xl mx-auto min-h-[calc(100vh-6.5rem)] grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
-          <div className="text-center lg:text-left">
-            <div className="flex justify-center lg:justify-start">
+        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4">
+          <div className="max-w-3xl">
+            <div className="home-reveal home-reveal-1 flex items-center gap-4">
               <img
                 src="/assets/logo.png"
                 alt="Compete'Art"
-                className="w-44 md:w-52 lg:w-64 drop-shadow-[0_0_28px_rgba(249,115,22,0.24)]"
+                className="w-36 sm:w-44 md:w-48"
               />
+              <span className="hidden h-px w-20 bg-orange-400/70 sm:block" />
+              <span className="hidden text-[0.67rem] font-semibold uppercase tracking-[0.28em] text-zinc-300 sm:block">
+                Festival de dança
+              </span>
             </div>
 
-            <h1 className="mt-6 text-3xl md:text-5xl lg:text-6xl font-primary leading-tight text-white">
-              Um festival de
-              <span
-                key={palavraAtual}
-                className={`block text-orange-400 ${animarPalavra ? "texto-pulsante" : ""}`}
-              >
-                {palavraAtual}
-              </span>
-            </h1>
-
-            <p className="mt-5 text-base md:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Uma celebração de dança, performance e presença de palco. As inscrições para
-              esta edição foram encerradas.
+            <p className="home-reveal home-reveal-2 mt-12 text-xs font-semibold uppercase tracking-[0.32em] text-orange-400 sm:mt-16">
+              A próxima edição já tem data
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-              <div className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 bg-zinc-950/80 px-4 py-2 text-xs tracking-[0.18em] uppercase text-gray-300">
-                <span className="absolute inset-y-0 -left-10 w-16 bg-gradient-to-r from-transparent via-white/35 to-transparent varredura-luz" />
-                <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
-                <span>Inscrições encerradas</span>
+            <h1 className="home-reveal home-reveal-3 mt-5 max-w-3xl font-display text-[clamp(3.35rem,8vw,7.25rem)] leading-[0.88] tracking-[-0.045em] text-white">
+              O palco chama
+              <span className="block text-orange-400">outra vez.</span>
+            </h1>
+
+            <p className="home-reveal home-reveal-4 mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base">
+              Movimento, presença e histórias que só existem quando as luzes se acendem.
+              Campinas recebe um novo encontro em 2027.
+            </p>
+          </div>
+
+          <div className="home-reveal home-reveal-3 lg:justify-self-end">
+            <div className="relative border-y border-white/25 py-7 sm:py-9 lg:w-[25rem]">
+              <span className="absolute -top-px left-0 h-px w-24 bg-orange-400" />
+
+              <time
+                dateTime="2027-06-05"
+                aria-label={PROXIMA_EDICAO.dataCompleta}
+                className="grid grid-cols-[auto_1fr] items-end gap-x-5 sm:gap-x-7"
+              >
+                <span className="font-display text-[7.8rem] leading-[0.72] tracking-[-0.08em] text-white sm:text-[9.5rem]">
+                  {PROXIMA_EDICAO.dia}
+                </span>
+                <div className="pb-1">
+                  <span className="block text-3xl font-semibold leading-none tracking-[-0.04em] text-orange-400 sm:text-4xl">
+                    {PROXIMA_EDICAO.mes}
+                  </span>
+                  <span className="mt-2 block text-2xl font-light leading-none tracking-[0.2em] text-white sm:text-3xl">
+                    {PROXIMA_EDICAO.ano}
+                  </span>
+                </div>
+              </time>
+
+              <div className="mt-9 flex items-start gap-3 border-t border-white/15 pt-6">
+                <MapPin aria-hidden="true" className="mt-0.5 shrink-0 text-orange-400" size={19} />
+                <div>
+                  <p className="text-sm font-semibold leading-snug text-white sm:text-base">
+                    {PROXIMA_EDICAO.local}
+                  </p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-400">
+                    {PROXIMA_EDICAO.cidade}
+                  </p>
+                </div>
               </div>
+
+              <Link
+                to="/localizacao"
+                className="group mt-7 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-200 transition hover:text-orange-300"
+              >
+                Ver localização
+                <ArrowUpRight
+                  aria-hidden="true"
+                  size={17}
+                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-500/10 via-transparent to-pink-500/10 blur-2xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-orange-400/25 bg-zinc-950/75 p-6 shadow-2xl backdrop-blur-md md:p-8">
-              <span className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/50 to-transparent" />
-              <div className="space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">
-                  Festival encerrado
-                </p>
-                <div>
-                  <h2 className="text-3xl font-primary leading-tight text-white md:text-4xl">
-                    Obrigado por viver esse palco com a gente.
-                  </h2>
-                  <p className="mt-4 text-base leading-relaxed text-zinc-300">
-                    A primeira edição chegou ao fim. Nos vemos em breve para novos
-                    encontros, novas apresentações e mais dança.
-                  </p>
-                </div>
-                <a
-                  href={RESULTADOS_FESTIVAL_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-orange-400 px-5 py-3 text-sm font-semibold text-zinc-950 shadow-[0_18px_40px_rgba(249,115,22,0.22)] transition hover:bg-orange-300"
-                >
-                  Ver resultado do festival
-                  <ExternalLink size={15} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <p className="home-reveal home-reveal-5 text-[0.62rem] font-medium uppercase tracking-[0.3em] text-zinc-500 lg:col-span-2 lg:-mt-6">
+            Em breve, novas informações
+          </p>
+        </section>
       </div>
-    </section>
+    </main>
   );
 }
