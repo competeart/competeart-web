@@ -55,7 +55,7 @@ export default function Home() {
               />
             </div>
 
-            <h1 className="home-reveal home-reveal-3 mt-14 max-w-3xl font-display text-[clamp(3.35rem,8vw,7.25rem)] leading-[0.88] tracking-[-0.045em] text-white sm:mt-20">
+            <h1 className="home-reveal home-reveal-3 mt-14 max-w-3xl font-display text-[clamp(3rem,7vw,6.4rem)] leading-[0.9] tracking-[-0.045em] text-white sm:mt-20">
               O palco chama
               <span className="block text-orange-400">outra vez.</span>
             </h1>
@@ -68,7 +68,7 @@ export default function Home() {
 
           <div className="home-reveal home-reveal-2 lg:justify-self-end">
             <div className="relative border-b border-white/25 pb-7 sm:pb-9 lg:w-[27rem]">
-              <p className="mb-8 text-xs font-semibold uppercase tracking-[0.28em] text-orange-400">
+              <p className="mb-10 text-xs font-semibold uppercase tracking-[0.28em] text-orange-400 sm:mb-12">
                 A próxima edição já tem data
               </p>
 
@@ -77,7 +77,7 @@ export default function Home() {
                 aria-label={PROXIMA_EDICAO.dataCompleta}
                 className="grid grid-cols-[auto_1fr] items-end gap-x-6 sm:gap-x-8"
               >
-                <span className="font-display text-[7.2rem] leading-[0.72] tracking-[-0.08em] text-white sm:text-[8.25rem]">
+                <span className="font-display text-[6.5rem] leading-[0.74] tracking-[-0.08em] text-white sm:text-[7.5rem]">
                   {PROXIMA_EDICAO.dia}
                 </span>
                 <div className="pb-0.5">
