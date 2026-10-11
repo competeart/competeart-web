@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
-import HeaderSite from "../components/layout/HeaderSite";
 import { PROXIMA_EDICAO } from "../data/evento";
 
 export default function Home() {
@@ -41,9 +39,7 @@ export default function Home() {
       <div className="absolute inset-0 z-10 bg-grade-editorial opacity-50" />
 
       <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
-        <div className="mx-auto w-full max-w-7xl">
-          <HeaderSite sobreFundo />
-        </div>
+        <div aria-hidden="true" className="mx-auto h-11 w-full max-w-7xl" />
 
         <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4">
           <div className="max-w-3xl">
@@ -102,8 +98,10 @@ export default function Home() {
                 </div>
               </div>
 
-              <Link
-                to="/localizacao"
+              <a
+                href={PROXIMA_EDICAO.mapaExterno}
+                target="_blank"
+                rel="noreferrer"
                 className="group mt-7 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-200 transition hover:text-orange-300"
               >
                 Ver localização
@@ -112,7 +110,7 @@ export default function Home() {
                   size={17}
                   className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
-              </Link>
+              </a>
             </div>
           </div>
 
