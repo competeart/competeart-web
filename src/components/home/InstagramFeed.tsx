@@ -91,7 +91,7 @@ export default function InstagramFeed() {
             <p className="mb-4 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-orange-400">
               @competeartfestival
             </p>
-            <h2 className="max-w-4xl font-display text-[clamp(2.4rem,4.5vw,3.75rem)] leading-[0.96] tracking-[-0.04em]">
+            <h2 className="max-w-4xl font-display text-[clamp(2rem,3.75vw,3.15rem)] leading-[0.98] tracking-[-0.04em]">
               Acompanhe no <span className="text-orange-400">Instagram.</span>
             </h2>
           </div>
