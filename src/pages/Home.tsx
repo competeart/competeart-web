@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
+import InstagramFeed from "../components/home/InstagramFeed";
 import { PROXIMA_EDICAO } from "../data/evento";
 
 export default function Home() {
@@ -18,27 +19,28 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-[100svh] overflow-hidden bg-[#080808]">
-      {!videoFalhou && (
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          playsInline
-          muted
-          preload="auto"
-          onError={() => setVideoFalhou(true)}
-          className="absolute inset-0 z-0 h-full w-full object-cover grayscale-[20%]"
-        >
-          <source src="/videos/bg-video.mp4" type="video/mp4" />
-        </video>
-      )}
+    <main className="bg-[#080808]">
+      <section className="relative min-h-[100svh] overflow-hidden">
+        {!videoFalhou && (
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            playsInline
+            muted
+            preload="auto"
+            onError={() => setVideoFalhou(true)}
+            className="absolute inset-0 z-0 h-full w-full object-cover grayscale-[20%]"
+          >
+            <source src="/videos/bg-video.mp4" type="video/mp4" />
+          </video>
+        )}
 
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.96)_0%,rgba(5,5,5,0.79)_46%,rgba(5,5,5,0.34)_100%)]" />
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.5)_0%,transparent_35%,rgba(0,0,0,0.72)_100%)]" />
-      <div className="absolute inset-0 z-10 bg-grade-editorial opacity-50" />
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.96)_0%,rgba(5,5,5,0.79)_46%,rgba(5,5,5,0.34)_100%)]" />
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.5)_0%,transparent_35%,rgba(0,0,0,0.72)_100%)]" />
+        <div className="absolute inset-0 z-10 bg-grade-editorial opacity-50" />
 
-      <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
+        <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
         <div aria-hidden="true" className="mx-auto h-11 w-full max-w-7xl" />
 
         <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4">
@@ -118,7 +120,10 @@ export default function Home() {
             Em breve, novas informações
           </p>
         </section>
-      </div>
+        </div>
+      </section>
+
+      <InstagramFeed />
     </main>
   );
 }

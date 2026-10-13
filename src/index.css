@@ -66,6 +66,14 @@
 .home-reveal-4 { animation-delay: 0.32s; }
 .home-reveal-5 { animation-delay: 0.41s; }
 
+.instagram-scroll {
+  scrollbar-width: none;
+}
+
+.instagram-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-reveal {
     opacity: 1;
