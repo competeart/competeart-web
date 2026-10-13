@@ -34,7 +34,7 @@ function CardPost({ post, indice }: { post: InstagramPost; indice: number }) {
       target="_blank"
       rel="noreferrer"
       aria-label={`Abrir publicação ${indice + 1} no Instagram`}
-      className="group relative aspect-square min-w-[82vw] snap-center overflow-hidden border border-white/10 bg-zinc-950 sm:min-w-0"
+      className="group relative aspect-[3/4] min-w-[82vw] snap-center overflow-hidden border border-white/10 bg-zinc-950 sm:min-w-0"
     >
       <img
         src={post.imageUrl}
@@ -91,9 +91,8 @@ export default function InstagramFeed() {
             <p className="mb-4 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-orange-400">
               @competeartfestival
             </p>
-            <h2 className="max-w-4xl font-display text-[clamp(2.7rem,6vw,5.4rem)] leading-[0.92] tracking-[-0.04em]">
-              Acompanhe as novidades
-              <span className="block text-orange-400">no Instagram.</span>
+            <h2 className="max-w-4xl font-display text-[clamp(2.4rem,4.5vw,3.75rem)] leading-[0.96] tracking-[-0.04em]">
+              Acompanhe no <span className="text-orange-400">Instagram.</span>
             </h2>
           </div>
 
