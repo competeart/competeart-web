@@ -43,13 +43,13 @@ export default function Home() {
         <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
         <div aria-hidden="true" className="mx-auto h-11 w-full max-w-7xl" />
 
-        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4">
-          <div className="max-w-3xl">
+        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 text-center sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4 lg:text-left">
+          <div className="mx-auto max-w-3xl lg:mx-0">
             <div className="home-reveal home-reveal-1">
               <img
                 src="/assets/logo.png"
                 alt="Compete'Art"
-                className="w-36 sm:w-44 md:w-48"
+                className="mx-auto w-36 sm:w-44 md:w-48 lg:mx-0"
               />
             </div>
 
@@ -58,14 +58,14 @@ export default function Home() {
               <span className="block text-orange-400">outra vez.</span>
             </h1>
 
-            <p className="home-reveal home-reveal-4 mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base">
+            <p className="home-reveal home-reveal-4 mx-auto mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base lg:mx-0">
               Movimento, presença e histórias que só existem quando as luzes se acendem.
               Campinas recebe um novo encontro em 2027.
             </p>
           </div>
 
           <div className="home-reveal home-reveal-2 lg:justify-self-end">
-            <div className="relative border-b border-white/25 pb-7 sm:pb-9 lg:w-[27rem]">
+            <div className="relative mx-auto border-b border-white/25 pb-7 sm:pb-9 lg:mx-0 lg:w-[27rem]">
               <p className="mb-10 text-xs font-semibold uppercase tracking-[0.28em] text-orange-400 sm:mb-12">
                 A próxima edição já tem data
               </p>
@@ -73,7 +73,7 @@ export default function Home() {
               <time
                 dateTime="2027-06-05"
                 aria-label={PROXIMA_EDICAO.dataCompleta}
-                className="grid grid-cols-[auto_1fr] items-end gap-x-6 sm:gap-x-8"
+                className="mx-auto grid w-fit grid-cols-[auto_1fr] items-end gap-x-6 text-left sm:gap-x-8 lg:mx-0"
               >
                 <span className="font-display text-[6.5rem] leading-[0.74] tracking-[-0.08em] text-white sm:text-[7.5rem]">
                   {PROXIMA_EDICAO.dia}
@@ -88,7 +88,7 @@ export default function Home() {
                 </div>
               </time>
 
-              <div className="mt-9 flex items-start gap-3 border-t border-white/15 pt-6">
+              <div className="mt-9 flex items-start justify-center gap-3 border-t border-white/15 pt-6 text-left lg:justify-start">
                 <MapPin aria-hidden="true" className="mt-0.5 shrink-0 text-orange-400" size={19} />
                 <div>
                   <p className="text-sm font-semibold leading-snug text-white sm:text-base">
@@ -116,7 +116,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="home-reveal home-reveal-5 text-[0.62rem] font-medium uppercase tracking-[0.3em] text-zinc-500 lg:col-span-2 lg:-mt-6">
+          <p className="home-reveal home-reveal-5 text-center text-[0.62rem] font-medium uppercase tracking-[0.3em] text-zinc-500 lg:col-span-2 lg:-mt-6 lg:text-left">
             Em breve, novas informações
           </p>
         </section>

@@ -82,11 +82,12 @@ export default function InstagramFeed() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden border-t border-white/10 bg-[#080808] px-5 py-20 text-white sm:px-8 sm:py-24 md:px-10 lg:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_15%,rgba(249,115,22,0.09),transparent_30%)]" />
+    <section className="relative z-20 -mt-28 overflow-hidden bg-[linear-gradient(to_bottom,transparent_0%,rgba(8,8,8,0.72)_7rem,#080808_13rem)] px-5 pb-20 pt-52 text-white sm:-mt-32 sm:px-8 sm:pb-24 sm:pt-56 md:px-10 lg:-mt-40 lg:pb-32 lg:pt-64">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_5rem,rgba(249,115,22,0.14),transparent_25rem),radial-gradient(circle_at_78%_35%,rgba(249,115,22,0.07),transparent_30%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-24 h-px w-24 -translate-x-1/2 bg-gradient-to-r from-transparent via-orange-400/50 to-transparent sm:top-28 sm:w-32 lg:top-36" />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="mb-10 grid gap-7 border-b border-white/15 pb-8 md:grid-cols-[1fr_auto] md:items-end md:gap-12 lg:mb-14 lg:pb-10">
+        <div className="mb-10 grid gap-7 border-b border-white/15 pb-8 text-center md:grid-cols-[1fr_auto] md:items-end md:gap-12 md:text-left lg:mb-14 lg:pb-10">
           <div>
             <p className="mb-4 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-orange-400">
               @competeartfestival
@@ -100,7 +101,7 @@ export default function InstagramFeed() {
             href={PERFIL_INSTAGRAM}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex w-fit items-center gap-3 border-b border-orange-400/70 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-200 transition hover:text-orange-300"
+            className="group mx-auto inline-flex w-fit items-center gap-3 border-b border-orange-400/70 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-200 transition hover:text-orange-300 md:mx-0"
           >
             <Instagram aria-hidden="true" size={17} />
             Seguir perfil
@@ -118,7 +119,7 @@ export default function InstagramFeed() {
           ))}
         </div>
 
-        <p className="mt-7 max-w-xl text-xs leading-relaxed text-zinc-500 sm:mt-9">
+        <p className="mx-auto mt-7 max-w-xl text-center text-xs leading-relaxed text-zinc-500 sm:mt-9 md:mx-0 md:text-left">
           Bastidores, encontros e tudo o que acontece antes, durante e depois do palco.
         </p>
       </div>
