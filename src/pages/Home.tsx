@@ -49,19 +49,19 @@ export default function Home() {
         <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
         <div aria-hidden="true" className="mx-auto h-11 w-full max-w-7xl" />
 
-        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-12 text-center sm:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-4 lg:text-left">
-          <div className="mx-auto max-w-3xl lg:mx-0">
-            <div className="home-reveal home-reveal-1">
-              <img
-                src="/assets/logo.png"
-                alt="Compete'Art"
-                className="mx-auto w-24 sm:w-28 md:w-32 lg:mx-0"
-              />
-            </div>
+        <div className="home-reveal home-reveal-1 mx-auto w-full max-w-7xl">
+          <img
+            src="/assets/logo.png"
+            alt="Compete'Art"
+            className="mx-auto w-24 sm:w-28 md:w-32 lg:mx-0"
+          />
+        </div>
 
-            <h1 className="home-reveal home-reveal-3 mt-10 max-w-2xl font-display text-[clamp(2.55rem,5.2vw,4.85rem)] leading-[0.9] tracking-[-0.045em] text-white sm:mt-12">
+        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-10 text-center sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:items-start lg:gap-20 lg:py-10 lg:text-left">
+          <div className="mx-auto max-w-3xl lg:mx-0">
+            <h1 className="home-reveal home-reveal-3 max-w-2xl font-display text-[clamp(2.55rem,5.2vw,4.85rem)] leading-[0.9] tracking-[-0.045em] text-white">
               A segunda edição
-              <span className="block text-orange-400">vem aí.</span>
+              <span className="block text-orange-400">está chegando.</span>
             </h1>
 
             <p className="home-reveal home-reveal-4 mx-auto mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base lg:mx-0">
@@ -97,10 +97,6 @@ export default function Home() {
 
           <div className="home-reveal home-reveal-2 lg:justify-self-end">
             <div className="relative mx-auto border-b border-white/25 pb-7 sm:pb-9 lg:mx-0 lg:w-[27rem]">
-              <p className="mb-10 text-xs font-semibold uppercase tracking-[0.28em] text-orange-400 sm:mb-12">
-                A próxima edição já tem data
-              </p>
-
               <time
                 dateTime="2027-06-05"
                 aria-label={PROXIMA_EDICAO.dataCompleta}
