@@ -61,7 +61,7 @@ export default function Home() {
           <div className="mx-auto max-w-3xl lg:mx-0">
             <h1 className="home-reveal home-reveal-3 max-w-2xl font-display text-[clamp(2.25rem,4.6vw,4.2rem)] leading-[0.9] tracking-[-0.045em] text-white">
               A segunda edição
-              <span className="block text-orange-400">está chegando.</span>
+              <span className="mt-2 block text-orange-400 sm:mt-3">está chegando.</span>
             </h1>
 
             <p className="home-reveal home-reveal-4 mx-auto mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base lg:mx-0">
