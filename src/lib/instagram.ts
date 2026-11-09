@@ -6,6 +6,8 @@ export interface InstagramPost {
   timestamp: string;
   caption?: string;
   alt?: string;
+  likeCount?: number;
+  commentsCount?: number;
 }
 
 interface InstagramFeedResponse {
