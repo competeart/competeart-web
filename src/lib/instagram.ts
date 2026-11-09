@@ -23,7 +23,10 @@ export async function buscarFeedInstagram(signal?: AbortSignal) {
     return null;
   }
 
-  const response = await fetch(`${apiUrl}/instagram/feed`, { signal });
+  const response = await fetch(`${apiUrl}/instagram/feed?version=2`, {
+    signal,
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     throw new Error("Não foi possível carregar o feed do Instagram");
