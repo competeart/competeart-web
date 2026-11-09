@@ -60,8 +60,8 @@ export default function Home() {
             </div>
 
             <h1 className="home-reveal home-reveal-3 mt-10 max-w-2xl font-display text-[clamp(2.55rem,5.2vw,4.85rem)] leading-[0.9] tracking-[-0.045em] text-white sm:mt-12">
-              O palco chama
-              <span className="block text-orange-400">outra vez.</span>
+              A segunda edição
+              <span className="block text-orange-400">vem aí.</span>
             </h1>
 
             <p className="home-reveal home-reveal-4 mx-auto mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base lg:mx-0">
