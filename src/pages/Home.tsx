@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { PROXIMA_EDICAO } from "../data/evento";
 
+const LINK_INSCRICOES =
+  "https://coreohub.com/evento/competeart-festival-de-danca-internacional-2027";
+
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -59,8 +62,33 @@ export default function Home() {
 
             <p className="home-reveal home-reveal-4 mx-auto mt-7 max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base lg:mx-0">
               Movimento, presença e histórias que só existem quando as luzes se acendem.
-              Campinas recebe um novo encontro em 2027.
+              Em 2027, o palco volta a Campinas — e as inscrições já estão abertas.
             </p>
+
+            <div className="home-reveal home-reveal-5 mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+              <a
+                href={LINK_INSCRICOES}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex min-h-14 items-stretch bg-orange-400 text-zinc-950 transition-colors duration-300 hover:bg-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              >
+                <span className="flex items-center px-6 text-[0.72rem] font-bold uppercase tracking-[0.2em] sm:px-7">
+                  Inscreva-se para 2027
+                </span>
+                <span className="flex items-center border-l border-black/20 px-4">
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    size={18}
+                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </a>
+
+              <p className="text-[0.62rem] font-medium uppercase leading-relaxed tracking-[0.24em] text-zinc-400">
+                Inscrições abertas
+                <span className="block text-zinc-600">pela CoreoHub</span>
+              </p>
+            </div>
           </div>
 
           <div className="home-reveal home-reveal-2 lg:justify-self-end">
@@ -114,10 +142,6 @@ export default function Home() {
               </a>
             </div>
           </div>
-
-          <p className="home-reveal home-reveal-5 text-center text-[0.62rem] font-medium uppercase tracking-[0.3em] text-zinc-500 lg:col-span-2 lg:-mt-6 lg:text-left">
-            Em breve, novas informações
-          </p>
         </section>
         </div>
       </section>
