@@ -180,15 +180,15 @@ export default function InstagramFeed() {
   const grupos = reduzirMovimento ? ["principal"] : ["anterior", "principal", "seguinte"];
 
   return (
-    <section className="relative z-20 overflow-hidden bg-[#080808] pb-20 pt-20 text-white sm:pb-28 sm:pt-24 lg:pb-36 lg:pt-28">
+    <section id="instagram" className="relative z-20 scroll-mt-0 overflow-hidden bg-[#080808] pb-20 pt-20 text-white sm:pb-28 sm:pt-24 lg:pb-36 lg:pt-28">
       <div className="mx-auto mb-12 flex max-w-7xl flex-col items-center px-5 text-center sm:px-8 md:px-10 lg:mb-16">
         <a
           href={PERFIL_INSTAGRAM}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex items-center justify-center gap-3.5 text-white transition-colors hover:text-orange-300 sm:gap-4"
+          className="group inline-flex flex-col items-center justify-center gap-4 text-white transition-colors hover:text-orange-300"
         >
-          <Instagram aria-hidden="true" className="size-7 shrink-0 sm:size-8" strokeWidth={1.8} />
+          <Instagram aria-hidden="true" className="size-8 shrink-0 sm:size-9" strokeWidth={1.7} />
           <h2 className="font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-none tracking-[-0.04em]">
             Siga no Instagram
           </h2>

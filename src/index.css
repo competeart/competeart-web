@@ -74,10 +74,29 @@
   display: none;
 }
 
+@keyframes scrollCueLine {
+  0% {
+    transform: translateY(-110%);
+  }
+  55%,
+  100% {
+    transform: translateY(210%);
+  }
+}
+
+.scroll-cue-line {
+  animation: scrollCueLine 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-reveal {
     opacity: 1;
     animation: none;
+  }
+
+  .scroll-cue-line {
+    animation: none;
+    transform: translateY(50%);
   }
 }
 

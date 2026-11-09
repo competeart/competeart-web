@@ -145,6 +145,17 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <a
+          href="#instagram"
+          aria-label="Ir para as novidades no Instagram"
+          className="home-reveal home-reveal-5 group mx-auto flex w-fit flex-col items-center gap-2.5 pb-1 text-[0.58rem] font-semibold uppercase tracking-[0.26em] text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white"
+        >
+          <span>Role para continuar</span>
+          <span aria-hidden="true" className="relative h-9 w-px overflow-hidden bg-white/20">
+            <span className="scroll-cue-line absolute inset-x-0 top-0 h-1/2 bg-orange-400" />
+          </span>
+        </a>
         </div>
       </section>
 
