@@ -51,11 +51,11 @@ export default function Home() {
               <img
                 src="/assets/logo.png"
                 alt="Compete'Art"
-                className="mx-auto w-36 sm:w-44 md:w-48 lg:mx-0"
+                className="mx-auto w-24 sm:w-28 md:w-32 lg:mx-0"
               />
             </div>
 
-            <h1 className="home-reveal home-reveal-3 mt-14 max-w-3xl font-display text-[clamp(3rem,7vw,6.4rem)] leading-[0.9] tracking-[-0.045em] text-white sm:mt-20">
+            <h1 className="home-reveal home-reveal-3 mt-10 max-w-2xl font-display text-[clamp(2.55rem,5.2vw,4.85rem)] leading-[0.9] tracking-[-0.045em] text-white sm:mt-12">
               O palco chama
               <span className="block text-orange-400">outra vez.</span>
             </h1>
