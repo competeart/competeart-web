@@ -180,7 +180,7 @@ export default function InstagramFeed() {
   const grupos = reduzirMovimento ? ["principal"] : ["anterior", "principal", "seguinte"];
 
   return (
-    <section id="instagram" className="relative z-20 scroll-mt-0 overflow-hidden bg-[#080808] pb-20 pt-20 text-white sm:pb-28 sm:pt-24 lg:pb-36 lg:pt-28">
+    <section id="instagram" className="relative z-20 scroll-mt-0 overflow-hidden bg-[#080808] pb-20 pt-14 text-white sm:pb-28 sm:pt-16 lg:pb-36 lg:pt-20">
       <div className="mx-auto mb-12 flex max-w-7xl flex-col items-center px-5 text-center sm:px-8 md:px-10 lg:mb-16">
         <a
           href={PERFIL_INSTAGRAM}
