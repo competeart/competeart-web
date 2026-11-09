@@ -42,6 +42,7 @@ export default function Home() {
         <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(5,5,5,0.96)_0%,rgba(5,5,5,0.79)_46%,rgba(5,5,5,0.34)_100%)]" />
         <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.5)_0%,transparent_35%,rgba(0,0,0,0.72)_100%)]" />
         <div className="absolute inset-0 z-10 bg-grade-editorial opacity-50" />
+        <div className="absolute inset-x-0 bottom-0 z-20 h-[30svh] bg-gradient-to-b from-transparent via-[#080808]/75 to-[#080808]" />
 
         <div className="relative z-30 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 md:px-10 md:py-8">
         <div aria-hidden="true" className="mx-auto h-11 w-full max-w-7xl" />
