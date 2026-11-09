@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import InstagramFeed from "../components/home/InstagramFeed";
+import SiteFooter from "../components/home/SiteFooter";
 import { PROXIMA_EDICAO } from "../data/evento";
 
 const LINK_INSCRICOES =
@@ -22,6 +23,7 @@ export default function Home() {
   }, []);
 
   return (
+    <>
     <main className="bg-[#080808]">
       <section className="relative min-h-[100svh] overflow-hidden">
         {!videoFalhou && (
@@ -161,5 +163,7 @@ export default function Home() {
 
       <InstagramFeed />
     </main>
+    <SiteFooter />
+    </>
   );
 }
