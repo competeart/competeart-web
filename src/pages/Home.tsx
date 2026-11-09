@@ -57,9 +57,9 @@ export default function Home() {
           />
         </div>
 
-        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 py-10 text-center sm:py-12 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:items-start lg:gap-20 lg:py-10 lg:text-left">
+        <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-10 pb-10 pt-16 text-center sm:pb-12 sm:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:items-start lg:gap-20 lg:pb-10 lg:pt-16 lg:text-left">
           <div className="mx-auto max-w-3xl lg:mx-0">
-            <h1 className="home-reveal home-reveal-3 max-w-2xl font-display text-[clamp(2.55rem,5.2vw,4.85rem)] leading-[0.9] tracking-[-0.045em] text-white">
+            <h1 className="home-reveal home-reveal-3 max-w-2xl font-display text-[clamp(2.25rem,4.6vw,4.2rem)] leading-[0.9] tracking-[-0.045em] text-white">
               A segunda edição
               <span className="block text-orange-400">está chegando.</span>
             </h1>
