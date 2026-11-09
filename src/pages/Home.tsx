@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
+import InstagramFeed from "../components/home/InstagramFeed";
 import { PROXIMA_EDICAO } from "../data/evento";
 
 const LINK_INSCRICOES =
@@ -145,6 +146,8 @@ export default function Home() {
         </section>
         </div>
       </section>
+
+      <InstagramFeed />
     </main>
   );
 }
