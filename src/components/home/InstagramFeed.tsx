@@ -180,7 +180,7 @@ export default function InstagramFeed() {
   const grupos = reduzirMovimento ? ["principal"] : ["anterior", "principal", "seguinte"];
 
   return (
-    <section id="instagram" className="relative z-20 scroll-mt-0 overflow-hidden bg-[#080808] pb-20 pt-14 text-white sm:pb-28 sm:pt-16 lg:pb-36 lg:pt-20">
+    <section id="instagram" className="relative z-20 scroll-mt-0 overflow-hidden bg-[#080808] pb-20 pt-12 text-white sm:pb-28 lg:pb-36">
       <div className="mx-auto mb-12 flex max-w-7xl flex-col items-center px-5 text-center sm:px-8 md:px-10 lg:mb-16">
         <a
           href={PERFIL_INSTAGRAM}
@@ -189,7 +189,7 @@ export default function InstagramFeed() {
           className="group inline-flex flex-col items-center justify-center gap-4 text-white transition-colors hover:text-orange-300"
         >
           <Instagram aria-hidden="true" className="size-8 shrink-0 sm:size-9" strokeWidth={1.7} />
-          <h2 className="font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-none tracking-[-0.04em]">
+          <h2 className="font-display text-[clamp(1.55rem,2.6vw,2.35rem)] leading-none tracking-[-0.04em]">
             Siga no Instagram
           </h2>
         </a>
