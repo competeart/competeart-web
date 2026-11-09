@@ -1,48 +1,35 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Images, Instagram, Play } from "lucide-react";
+import { ArrowUpRight, Instagram } from "lucide-react";
 import { INSTAGRAM_FALLBACK } from "../../data/instagramFallback";
 import { buscarFeedInstagram, type InstagramPost } from "../../lib/instagram";
 
 const PERFIL_INSTAGRAM = "https://www.instagram.com/competeartfestival/";
 
-const RITMO_GALERIA = [
-  "sm:translate-y-10 lg:translate-y-16",
-  "sm:translate-y-0",
-  "sm:translate-y-16 lg:translate-y-24",
-  "sm:translate-y-5 lg:translate-y-9",
-];
-
 function formatarData(timestamp: string) {
   return new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
-    month: "short",
-  })
-    .format(new Date(timestamp))
-    .replace(".", "")
-    .toUpperCase();
+    month: "long",
+    year: "numeric",
+  }).format(new Date(timestamp));
 }
 
-function IconeTipoMidia({ tipo }: { tipo: string }) {
-  if (tipo === "VIDEO" || tipo === "REELS") {
-    return <Play aria-hidden="true" size={15} fill="currentColor" />;
+function resumirLegenda(post: InstagramPost) {
+  const primeiraLinha = post.caption
+    ?.split("\n")
+    .map((trecho) => trecho.trim())
+    .find(Boolean);
+  const texto = primeiraLinha || post.alt;
+
+  if (!texto || texto === "Publicação do Compete'Art Festival no Instagram") {
+    return "Um novo registro do que acontece dentro e fora do palco.";
   }
 
-  if (tipo === "CAROUSEL_ALBUM") {
-    return <Images aria-hidden="true" size={16} />;
-  }
-
-  return <Instagram aria-hidden="true" size={16} />;
+  return texto.length > 190 ? `${texto.slice(0, 187).trimEnd()}…` : texto;
 }
 
-function CardPost({ post, indice }: { post: InstagramPost; indice: number }) {
+function Publicacao({ post, indice }: { post: InstagramPost; indice: number }) {
   return (
-    <div
-      className={`min-w-[78vw] shrink-0 snap-center sm:min-w-0 ${RITMO_GALERIA[indice] ?? ""}`}
-    >
-      <span className="mb-3 block text-[0.6rem] font-semibold tracking-[0.28em] text-zinc-600">
-        0{indice + 1}
-      </span>
-
+    <article className="grid min-w-[94%] snap-start grid-cols-1 gap-7 sm:min-w-[88%] md:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.68fr)] md:items-center md:gap-10 lg:min-w-[86%] lg:gap-16">
       <a
         href={post.permalink}
         target="_blank"
@@ -55,26 +42,41 @@ function CardPost({ post, indice }: { post: InstagramPost; indice: number }) {
           alt={post.alt ?? post.caption ?? "Publicação do Compete'Art Festival"}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
+          className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10 opacity-75 transition duration-500 group-hover:opacity-95" />
-
-        <span className="absolute right-4 top-4 text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
-          <IconeTipoMidia tipo={post.mediaType} />
-        </span>
-
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:p-5">
-          <span className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white/75">
-            <span aria-hidden="true" className="h-px w-5 bg-orange-400/80" />
-            {formatarData(post.timestamp)}
-          </span>
-          <span className="flex translate-y-1 items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-            Ver post
-            <ArrowUpRight aria-hidden="true" size={14} />
-          </span>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-60 transition duration-500 group-hover:opacity-30" />
       </a>
-    </div>
+
+      <div className="pb-3 text-left md:pb-0">
+        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-orange-400">
+          Publicado em
+        </p>
+        <time
+          dateTime={post.timestamp}
+          className="mt-3 block text-sm font-medium text-zinc-300"
+        >
+          {formatarData(post.timestamp)}
+        </time>
+
+        <p className="mt-7 max-w-md text-base leading-relaxed text-zinc-300 sm:text-lg md:mt-9">
+          {resumirLegenda(post)}
+        </p>
+
+        <a
+          href={post.permalink}
+          target="_blank"
+          rel="noreferrer"
+          className="group mt-8 inline-flex items-center gap-3 border-b border-orange-400/70 pb-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white transition hover:text-orange-300"
+        >
+          Ver publicação
+          <ArrowUpRight
+            aria-hidden="true"
+            size={16}
+            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </a>
+      </div>
+    </article>
   );
 }
 
@@ -106,8 +108,8 @@ export default function InstagramFeed() {
               @competeartfestival
             </p>
             <h2 className="max-w-2xl font-display text-[clamp(2.15rem,4vw,3.6rem)] leading-[0.95] tracking-[-0.04em]">
-              Acompanhe no
-              <span className="block text-orange-400">Instagram.</span>
+              Últimos
+              <span className="block text-orange-400">movimentos.</span>
             </h2>
           </div>
 
@@ -122,7 +124,7 @@ export default function InstagramFeed() {
               className="group inline-flex w-fit items-center gap-3 border-b border-orange-400/70 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-200 transition hover:text-orange-300"
             >
               <Instagram aria-hidden="true" size={17} />
-              Seguir perfil
+              Acompanhar no Instagram
               <ArrowUpRight
                 aria-hidden="true"
                 size={16}
@@ -132,9 +134,12 @@ export default function InstagramFeed() {
           </div>
         </div>
 
-        <div className="instagram-scroll -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-20 lg:grid-cols-[0.94fr_1.06fr_0.96fr_1.04fr] lg:gap-4 lg:pb-24">
+        <div
+          aria-label="Publicações recentes do Compete'Art no Instagram"
+          className="instagram-scroll -mr-5 flex snap-x snap-mandatory gap-7 overflow-x-auto pb-3 pr-5 sm:-mr-8 sm:gap-10 sm:pr-8 md:-mr-10 md:gap-14 md:pr-10 lg:gap-20"
+        >
           {posts.map((post, indice) => (
-            <CardPost key={post.id} post={post} indice={indice} />
+            <Publicacao key={post.id} post={post} indice={indice} />
           ))}
         </div>
       </div>
