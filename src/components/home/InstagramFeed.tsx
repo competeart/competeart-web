@@ -189,7 +189,7 @@ export default function InstagramFeed() {
           className="group inline-flex flex-col items-center justify-center gap-4 text-white transition-colors hover:text-orange-300"
         >
           <Instagram aria-hidden="true" className="size-8 shrink-0 sm:size-9" strokeWidth={1.7} />
-          <h2 className="font-display text-[clamp(2.1rem,4vw,3.5rem)] leading-none tracking-[-0.04em]">
+          <h2 className="font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-none tracking-[-0.04em]">
             Siga no Instagram
           </h2>
         </a>
