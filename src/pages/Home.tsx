@@ -16,7 +16,7 @@ function BotaoInscricao({ className = "" }: { className?: string }) {
       className={`group min-h-14 items-stretch bg-orange-400 text-zinc-950 transition-colors duration-300 hover:bg-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:ring-offset-4 focus-visible:ring-offset-black ${className}`}
     >
       <span className="flex items-center px-4 text-[0.62rem] font-bold uppercase tracking-[0.14em] sm:px-7 sm:text-[0.7rem] sm:tracking-[0.18em]">
-        Inscreva-se para 2027
+        Inscreva-se
       </span>
       <span className="flex items-center border-l border-black/20 px-4">
         <ArrowUpRight
@@ -26,6 +26,17 @@ function BotaoInscricao({ className = "" }: { className?: string }) {
         />
       </span>
     </a>
+  );
+}
+
+function LabelCoreoHub({ className = "" }: { className?: string }) {
+  return (
+    <p
+      className={`text-[0.56rem] font-medium uppercase leading-[1.65] tracking-[0.22em] text-zinc-500 ${className}`}
+    >
+      Inscrições abertas
+      <span className="block text-zinc-600">pela CoreoHub</span>
+    </p>
   );
 }
 
@@ -79,11 +90,11 @@ export default function Home() {
             <section className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-8 pb-5 pt-7 text-center sm:gap-10 sm:pb-8 sm:pt-9 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)] lg:gap-20 lg:py-10 lg:text-left">
               <div className="mx-auto max-w-3xl lg:mx-0">
                 <p className="home-reveal home-reveal-2 text-[0.62rem] font-semibold uppercase tracking-[0.28em] text-orange-400 sm:text-[0.68rem]">
-                  A segunda edição
+                  Compete&apos;Art Festival 2027
                 </p>
 
-                <h1 className="home-reveal home-reveal-3 mx-auto mt-4 whitespace-nowrap font-display text-[clamp(1.95rem,9.2vw,2.65rem)] leading-none tracking-[-0.04em] text-white sm:text-[3.4rem] lg:mx-0 lg:mt-5 lg:text-[clamp(3.8rem,5vw,4.75rem)]">
-                  Está <span className="text-orange-400">chegando.</span>
+                <h1 className="home-reveal home-reveal-3 mx-auto mt-4 whitespace-nowrap font-display text-[clamp(1.7rem,7.7vw,2.45rem)] leading-none tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:mt-5 lg:text-[clamp(3.5rem,4.65vw,4.45rem)]">
+                  Inscrições <span className="text-orange-400">abertas</span>
                 </h1>
 
                 <p className="home-reveal home-reveal-4 mx-auto mt-5 max-w-lg text-sm leading-relaxed text-zinc-300 sm:mt-6 sm:text-base lg:mx-0 lg:mt-7 lg:max-w-xl">
@@ -91,7 +102,10 @@ export default function Home() {
                   só existem quando as luzes se acendem.
                 </p>
 
-                <BotaoInscricao className="home-reveal home-reveal-5 mt-8 hidden lg:inline-flex" />
+                <div className="home-reveal home-reveal-5 mt-8 hidden items-center gap-5 lg:flex">
+                  <BotaoInscricao className="inline-flex" />
+                  <LabelCoreoHub />
+                </div>
               </div>
 
               <div className="home-reveal home-reveal-2 lg:justify-self-end">
@@ -144,7 +158,10 @@ export default function Home() {
                     />
                   </a>
 
-                  <BotaoInscricao className="home-reveal home-reveal-5 mt-7 inline-flex lg:hidden" />
+                  <div className="home-reveal home-reveal-5 mt-7 flex flex-col items-center gap-3 lg:hidden">
+                    <BotaoInscricao className="inline-flex" />
+                    <LabelCoreoHub className="text-center" />
+                  </div>
                 </div>
               </div>
             </section>
