@@ -278,17 +278,17 @@ export default function InstagramFeed() {
           type="button"
           aria-label="Ver publicação anterior"
           onClick={() => navegar(-1)}
-          className="absolute left-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/70 text-white backdrop-blur-sm transition hover:border-orange-400 hover:bg-black hover:text-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 lg:flex xl:left-8"
+          className="absolute left-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center text-white/25 transition-colors duration-300 hover:text-white/65 focus-visible:outline-none focus-visible:text-white/80 lg:flex xl:left-8"
         >
-          <ChevronLeft aria-hidden="true" size={25} strokeWidth={1.7} />
+          <ChevronLeft aria-hidden="true" size={28} strokeWidth={1.35} />
         </button>
         <button
           type="button"
           aria-label="Ver próxima publicação"
           onClick={() => navegar(1)}
-          className="absolute right-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/70 text-white backdrop-blur-sm transition hover:border-orange-400 hover:bg-black hover:text-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 lg:flex xl:right-8"
+          className="absolute right-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center text-white/25 transition-colors duration-300 hover:text-white/65 focus-visible:outline-none focus-visible:text-white/80 lg:flex xl:right-8"
         >
-          <ChevronRight aria-hidden="true" size={25} strokeWidth={1.7} />
+          <ChevronRight aria-hidden="true" size={28} strokeWidth={1.35} />
         </button>
       </div>
     </section>
