@@ -4,7 +4,13 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { Heart, Instagram, MessageCircle } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Instagram,
+  MessageCircle,
+} from "lucide-react";
 import { INSTAGRAM_FALLBACK } from "../../data/instagramFallback";
 import { buscarFeedInstagram, type InstagramPost } from "../../lib/instagram";
 
@@ -49,7 +55,7 @@ function Publicacao({ post, indice, duplicada = false }: PublicacaoProps) {
           className="h-full w-full select-none object-cover transition duration-700 ease-out group-hover:scale-[1.035] group-focus-visible:scale-[1.035]"
         />
 
-        <div className="absolute inset-0 hidden items-center justify-center gap-7 bg-black/62 opacity-0 backdrop-blur-[1px] transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 md:flex">
+        <div className="absolute inset-0 hidden items-center justify-center gap-7 bg-black/62 opacity-0 backdrop-blur-[1px] transition duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 lg:flex">
           <span className="flex items-center gap-2.5 text-[0.95rem] font-semibold text-white">
             <Heart aria-hidden="true" size={27} fill="currentColor" strokeWidth={1.7} />
             {curtidas}
@@ -60,7 +66,7 @@ function Publicacao({ post, indice, duplicada = false }: PublicacaoProps) {
           </span>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-5 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-4 pb-4 pt-10 text-xs font-semibold text-white md:hidden">
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-5 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-4 pb-4 pt-10 text-xs font-semibold text-white lg:hidden">
           <span className="flex items-center gap-2">
             <Heart aria-hidden="true" size={21} fill="currentColor" strokeWidth={1.7} />
             {curtidas}
@@ -127,14 +133,14 @@ export default function InstagramFeed() {
 
       if (!pausadoRef.current && !arrastandoRef.current) {
         trilho.scrollLeft += (VELOCIDADE_POR_SEGUNDO * delta) / 1000;
-      }
 
-      const larguraGrupo = trilho.scrollWidth / 3;
-      if (larguraGrupo > 0) {
-        if (trilho.scrollLeft >= larguraGrupo * 2) {
-          trilho.scrollLeft -= larguraGrupo;
-        } else if (trilho.scrollLeft <= 1) {
-          trilho.scrollLeft += larguraGrupo;
+        const larguraGrupo = trilho.scrollWidth / 3;
+        if (larguraGrupo > 0) {
+          if (trilho.scrollLeft >= larguraGrupo * 2) {
+            trilho.scrollLeft -= larguraGrupo;
+          } else if (trilho.scrollLeft <= 1) {
+            trilho.scrollLeft += larguraGrupo;
+          }
         }
       }
 
@@ -177,6 +183,21 @@ export default function InstagramFeed() {
     }
   }
 
+  function navegar(direcao: -1 | 1) {
+    const trilho = trilhoRef.current;
+    if (!trilho) return;
+
+    pausadoRef.current = true;
+    const larguraPublicacao =
+      trilho.querySelector("article")?.getBoundingClientRect().width ||
+      trilho.clientWidth / 4;
+
+    trilho.scrollBy({
+      left: larguraPublicacao * direcao,
+      behavior: reduzirMovimento ? "auto" : "smooth",
+    });
+  }
+
   const grupos = reduzirMovimento ? ["principal"] : ["anterior", "principal", "seguinte"];
 
   return (
@@ -199,15 +220,12 @@ export default function InstagramFeed() {
       </div>
 
       <div
-        ref={trilhoRef}
-        role="region"
-        aria-label="Publicações recentes do Compete'Art no Instagram"
-        className="instagram-scroll flex cursor-grab touch-pan-x overflow-x-auto overscroll-x-contain active:cursor-grabbing"
+        className="relative"
         onMouseEnter={() => {
           pausadoRef.current = true;
         }}
-        onMouseLeave={() => {
-          pausadoRef.current = false;
+        onMouseLeave={(evento) => {
+          pausadoRef.current = evento.currentTarget.contains(document.activeElement);
         }}
         onFocusCapture={() => {
           pausadoRef.current = true;
@@ -217,37 +235,61 @@ export default function InstagramFeed() {
             pausadoRef.current = false;
           }
         }}
-        onPointerDown={iniciarArraste}
-        onPointerMove={arrastar}
-        onPointerUp={encerrarArraste}
-        onPointerCancel={encerrarArraste}
-        onClickCapture={(evento) => {
-          if (moveuRef.current) {
-            evento.preventDefault();
-            moveuRef.current = false;
-          }
-        }}
       >
-        {grupos.map((grupo) => {
-          const duplicado = grupo !== "principal";
+        <div
+          ref={trilhoRef}
+          role="region"
+          aria-label="Publicações recentes do Compete'Art no Instagram"
+          className="instagram-scroll flex cursor-grab touch-pan-x overflow-x-auto overscroll-x-contain active:cursor-grabbing"
+          onPointerDown={iniciarArraste}
+          onPointerMove={arrastar}
+          onPointerUp={encerrarArraste}
+          onPointerCancel={encerrarArraste}
+          onClickCapture={(evento) => {
+            if (moveuRef.current) {
+              evento.preventDefault();
+              moveuRef.current = false;
+            }
+          }}
+        >
+          {grupos.map((grupo) => {
+            const duplicado = grupo !== "principal";
 
-          return (
-            <div
-              key={grupo}
-              className="flex shrink-0"
-              aria-hidden={duplicado || undefined}
-            >
-              {posts.map((post, indice) => (
-                <Publicacao
-                  key={`${grupo}-${post.id}`}
-                  post={post}
-                  indice={indice}
-                  duplicada={duplicado}
-                />
-              ))}
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={grupo}
+                className="flex shrink-0"
+                aria-hidden={duplicado || undefined}
+              >
+                {posts.map((post, indice) => (
+                  <Publicacao
+                    key={`${grupo}-${post.id}`}
+                    post={post}
+                    indice={indice}
+                    duplicada={duplicado}
+                  />
+                ))}
+              </div>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          aria-label="Ver publicação anterior"
+          onClick={() => navegar(-1)}
+          className="absolute left-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/70 text-white backdrop-blur-sm transition hover:border-orange-400 hover:bg-black hover:text-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 lg:flex xl:left-8"
+        >
+          <ChevronLeft aria-hidden="true" size={25} strokeWidth={1.7} />
+        </button>
+        <button
+          type="button"
+          aria-label="Ver próxima publicação"
+          onClick={() => navegar(1)}
+          className="absolute right-5 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/70 text-white backdrop-blur-sm transition hover:border-orange-400 hover:bg-black hover:text-orange-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 lg:flex xl:right-8"
+        >
+          <ChevronRight aria-hidden="true" size={25} strokeWidth={1.7} />
+        </button>
       </div>
     </section>
   );
