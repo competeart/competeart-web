@@ -17,13 +17,7 @@ interface InstagramFeedResponse {
 }
 
 export async function buscarFeedInstagram(signal?: AbortSignal) {
-  const apiUrl = import.meta.env.VITE_API_URL;
-
-  if (!apiUrl) {
-    return null;
-  }
-
-  const response = await fetch(`${apiUrl}/instagram/feed?version=2`, {
+  const response = await fetch("/api/instagram", {
     signal,
     cache: "no-store",
   });
